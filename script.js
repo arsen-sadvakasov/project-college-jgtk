@@ -641,6 +641,7 @@
                 { title: 'Жол қозғалысын ұйымдастыру', desc: 'Көлік логистикасы, жол қауіпсіздігі және қозғалысты реттеу мамандары.', more: 'Толық ақпарат →' },
             ],
             profDuration: '3 жыл 10 ай',
+            profSalaryLabel: 'Орташа жалақы: ',
             missionTag: 'Миссия',
             missionTitle: 'Біздің <span class="text-accent">миссиямыз</span>',
             missionFeatures: [
@@ -759,6 +760,7 @@
                 { title: 'Организация дорожного движения', desc: 'Специалисты по транспортной логистике, безопасности дорожного движения и регулированию.', more: 'Подробнее →' },
             ],
             profDuration: '3 года 10 месяцев',
+            profSalaryLabel: 'Средняя зарплата: ',
             missionTag: 'Миссия',
             missionTitle: 'Наша <span class="text-accent">миссия</span>',
             missionFeatures: [
@@ -909,10 +911,15 @@
                 const cd = card.querySelector('.prof-card__desc');
                 const cm = card.querySelector('.prof-card__more');
                 const cdur = card.querySelector('.prof-card__dur-text');
+                
                 if (ct) ct.textContent = c.title;
                 if (cd) cd.textContent = c.desc;
                 if (cm) cm.textContent = c.more;
                 if (cdur) cdur.textContent = t.profDuration;
+            });
+            
+            qa('.salary-label').forEach(lbl => {
+                if (t.profSalaryLabel) lbl.textContent = t.profSalaryLabel;
             });
         }
 

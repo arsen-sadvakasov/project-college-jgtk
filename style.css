@@ -999,8 +999,36 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     font-size: 0.95rem;
     color: var(--slate);
     line-height: 1.6;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     flex-grow: 1;
+}
+
+.prof-card__salary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(96, 165, 250, 0.08);
+    border-radius: var(--r-md);
+    padding: 10px 12px;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+    color: var(--navy);
+}
+
+[data-theme="dark"] .prof-card__salary {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+}
+
+.prof-card__salary svg {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.prof-card__salary-val {
+    font-weight: 700;
+    color: var(--accent);
+    margin-left: auto;
 }
 
 .prof-card__more {
