@@ -456,6 +456,130 @@
         </div>
     </div>
 
+    <!-- ===== CALCULATOR SECTION ===== -->
+    <section id="calculator" class="section calc-section">
+        <div class="container">
+            <div class="calc-card" data-animate="fade-up">
+                <div class="calc-card__header">
+                    <span class="section__tag" data-i18n="calcTag">Калькулятор</span>
+                    <h2 class="section__title" data-i18n="calcTitle">Грантқа түсу <span class="text-accent">мүмкіндігі</span></h2>
+                    <p class="section__desc" data-i18n="calcDesc">Өз көрсеткіштеріңізді енгізіп, мүмкіндігіңізді бағалаңыз</p>
+                </div>
+
+                <div class="calc-layout">
+                    <!-- Form -->
+                    <div class="calc-form">
+                        <div class="calc-group">
+                            <label class="calc-label" data-i18n="calcBase">Қай сынып негізінде?</label>
+                            <div class="calc-radio-group">
+                                <label class="calc-radio">
+                                    <input type="radio" name="baseClass" value="9" checked>
+                                    <span data-i18n="calcBase9">9 сынып</span>
+                                </label>
+                                <label class="calc-radio">
+                                    <input type="radio" name="baseClass" value="11">
+                                    <span data-i18n="calcBase11">11 сынып</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="calc-group">
+                            <label class="calc-label" data-i18n="calcSpec">Мамандық</label>
+                            <select id="calc-spec" class="calc-select">
+                                <option value="0" data-i18n="calcSpec0">Мектепке дейінгі тәрбие және оқыту</option>
+                                <option value="1" data-i18n="calcSpec1">Есеп және аудит</option>
+                                <option value="2" data-i18n="calcSpec2">Құқықтану</option>
+                                <option value="3" data-i18n="calcSpec3">Есептеу техникасы</option>
+                                <option value="4" data-i18n="calcSpec4">Бағдарламалық қамтамасыз ету</option>
+                                <option value="5" data-i18n="calcSpec5">Жол қозғалысын ұйымдастыру</option>
+                            </select>
+                        </div>
+
+                        <div class="calc-group" id="calc-gpa-container">
+                            <label class="calc-label"><span data-i18n="calcGpa">Орташа балл (GPA):</span> <span id="calc-gpa-val" class="calc-gpa-val">4.0</span></label>
+                            
+                            <div id="calc-slider-mode">
+                                <input type="range" id="calc-gpa" class="calc-range" min="3.0" max="5.0" step="0.1" value="4.0">
+                                <div class="calc-range-labels">
+                                    <span>3.0</span>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+
+                            <button type="button" class="calc-toggle-btn" id="calc-toggle-btn" data-i18n="calcBySubjects">Пәндер арқылы есептеу</button>
+                            
+                            <div class="calc-subjects hidden" id="calc-subjects">
+                                <div class="calc-radio-group calc-subjects-lang">
+                                    <label class="calc-radio">
+                                        <input type="radio" name="classLang" value="kz" checked>
+                                        <span data-i18n="calcLangKz">Қазақ сыныбы</span>
+                                    </label>
+                                    <label class="calc-radio">
+                                        <input type="radio" name="classLang" value="ru">
+                                        <span data-i18n="calcLangRu">Орыс сыныбы</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="calc-subject-list">
+                                    <div class="calc-subject-row">
+                                        <span class="calc-subject-name" id="subj-1">Қазақ тілі</span>
+                                        <select class="calc-select calc-subject-grade"><option value="5">5</option><option value="4" selected>4</option><option value="3">3</option></select>
+                                    </div>
+                                    <div class="calc-subject-row">
+                                        <span class="calc-subject-name" id="subj-2">Математика</span>
+                                        <select class="calc-select calc-subject-grade"><option value="5">5</option><option value="4" selected>4</option><option value="3">3</option></select>
+                                    </div>
+                                    <div class="calc-subject-row">
+                                        <span class="calc-subject-name" id="subj-3">Қазақстан тарихы</span>
+                                        <select class="calc-select calc-subject-grade"><option value="5">5</option><option value="4" selected>4</option><option value="3">3</option></select>
+                                    </div>
+                                    <div class="calc-subject-row">
+                                        <span class="calc-subject-name" id="subj-4">Орыс тілі</span>
+                                        <select class="calc-select calc-subject-grade"><option value="5">5</option><option value="4" selected>4</option><option value="3">3</option></select>
+                                    </div>
+                                    <div class="calc-subject-row">
+                                        <select class="calc-select calc-subject-select" id="subj-opt">
+                                            <option value="phys" data-i18n="subjPhys">Физика</option>
+                                            <option value="chem" data-i18n="subjChem">Химия</option>
+                                            <option value="bio" data-i18n="subjBio">Биология</option>
+                                            <option value="geo" data-i18n="subjGeo">География</option>
+                                            <option value="it" data-i18n="subjIt">Информатика</option>
+                                            <option value="eng" data-i18n="subjEng">Шет тілі</option>
+                                            <option value="lit" data-i18n="subjLit">Әдебиет</option>
+                                        </select>
+                                        <select class="calc-select calc-subject-grade"><option value="5">5</option><option value="4" selected>4</option><option value="3">3</option></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="calc-result">
+                        <div class="calc-result__circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="calc-circle-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="calc-circle-progress" id="calc-progress" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="calc-result__val">
+                                <span id="calc-percent">0</span>%
+                            </div>
+                        </div>
+                        <h3 class="calc-result__title" id="calc-status" data-i18n="calcResultHigh">Жоғары мүмкіндік!</h3>
+                        <div class="calc-result__price">
+                            <span data-i18n="calcPriceLbl">Ақылы оқу құны (жылына):</span>
+                            <strong id="calc-price">250 000 ₸</strong>
+                        </div>
+                        <div id="calc-recommendation" class="calc-recommendation">
+                            <span data-i18n="calcRecLbl">Балама мамандық ұсынамыз:</span>
+                            <strong id="calc-rec-spec">-</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== MISSION SECTION ===== -->
     <section id="mission" class="section mission">
         <div class="container">

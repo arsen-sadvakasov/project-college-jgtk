@@ -716,6 +716,27 @@
                 'Командалық жобалар',
                 'Бай кітапхана қоры'
             ],
+            calcTag: 'Калькулятор',
+            calcTitle: 'Грантқа түсу <span class="text-accent">мүмкіндігі</span>',
+            calcDesc: 'Өз көрсеткіштеріңізді енгізіп, мүмкіндігіңізді бағалаңыз',
+            calcBase: 'Қай сынып негізінде?',
+            calcBase9: '9 сынып',
+            calcBase11: '11 сынып',
+            calcSpec: 'Мамандық',
+            calcSpecOpts: [
+                'Мектепке дейінгі тәрбие және оқыту',
+                'Есеп және аудит',
+                'Құқықтану',
+                'Есептеу техникасы',
+                'Бағдарламалық қамтамасыз ету',
+                'Жол қозғалысын ұйымдастыру'
+            ],
+            calcGpa: 'Орташа балл (GPA):',
+            calcPriceLbl: 'Ақылы оқу құны (жылына):',
+            calcRecLbl: 'Балама мамандық ұсынамыз:',
+            calcStatusHigh: 'Жоғары мүмкіндік!',
+            calcStatusMed: 'Орташа мүмкіндік',
+            calcStatusLow: 'Төмен мүмкіндік'
         },
         ru: {
             navLinks: ['Специальности', 'Наша миссия', 'Документы', 'Контакты'],
@@ -813,6 +834,27 @@
                 'Командные проекты',
                 'Богатый библиотечный фонд'
             ],
+            calcTag: 'Калькулятор',
+            calcTitle: 'Шансы на <span class="text-accent">грант</span>',
+            calcDesc: 'Введите свои данные и оцените вероятность поступления',
+            calcBase: 'На базе какого класса?',
+            calcBase9: '9 класс',
+            calcBase11: '11 класс',
+            calcSpec: 'Специальность',
+            calcSpecOpts: [
+                'Дошкольное воспитание и обучение',
+                'Учёт и аудит',
+                'Правоведение',
+                'Программное обеспечение ВТ',
+                'Программное обеспечение',
+                'Организация дорожного движения'
+            ],
+            calcGpa: 'Средний балл (GPA):',
+            calcPriceLbl: 'Стоимость обучения (в год):',
+            calcRecLbl: 'Предлагаем альтернативу:',
+            calcStatusHigh: 'Высокие шансы!',
+            calcStatusMed: 'Средние шансы',
+            calcStatusLow: 'Низкие шансы'
         },
     };
 
@@ -1048,6 +1090,41 @@
                     el.textContent = t.galleryCaptions[i];
                 }
             });
+        }
+
+        // Calculator
+        const calcSec = q('#calculator');
+        if (calcSec) {
+            const tag = calcSec.querySelector('.section__tag');
+            const title = calcSec.querySelector('.section__title');
+            const desc = calcSec.querySelector('.section__desc');
+            const labels = calcSec.querySelectorAll('.calc-label');
+            const base9 = calcSec.querySelector('span[data-i18n="calcBase9"]');
+            const base11 = calcSec.querySelector('span[data-i18n="calcBase11"]');
+            const priceLbl = calcSec.querySelector('span[data-i18n="calcPriceLbl"]');
+            const recLbl = calcSec.querySelector('span[data-i18n="calcRecLbl"]');
+            const specSelect = calcSec.querySelector('#calc-spec');
+
+            if (tag) tag.textContent = t.calcTag;
+            if (title) title.innerHTML = t.calcTitle;
+            if (desc) desc.textContent = t.calcDesc;
+            
+            if (labels[0]) labels[0].textContent = t.calcBase;
+            if (labels[1]) labels[1].textContent = t.calcSpec;
+            if (labels[2] && labels[2].querySelector('span[data-i18n="calcGpa"]')) {
+                labels[2].querySelector('span[data-i18n="calcGpa"]').textContent = t.calcGpa;
+            }
+
+            if (base9) base9.textContent = t.calcBase9;
+            if (base11) base11.textContent = t.calcBase11;
+            if (priceLbl) priceLbl.textContent = t.calcPriceLbl;
+            if (recLbl) recLbl.textContent = t.calcRecLbl;
+
+            if (specSelect && t.calcSpecOpts) {
+                Array.from(specSelect.options).forEach((opt, i) => {
+                    opt.textContent = t.calcSpecOpts[i];
+                });
+            }
         }
     }
 
@@ -1291,6 +1368,7 @@
         initRatingSystem();
         initAccessibility();
         initGallery();
+        initCalculator();
     }
 
     // ========================================
@@ -1405,6 +1483,192 @@
         // Initial setup
         updateSlider();
         startAutoplay();
+    }
+
+    // ========================================
+    // GRANT CALCULATOR
+    // ========================================
+    function initCalculator() {
+        const specSelect = document.getElementById('calc-spec');
+        const baseRadios = document.querySelectorAll('input[name="baseClass"]');
+        const gpaRange = document.getElementById('calc-gpa');
+        const gpaValDisplay = document.getElementById('calc-gpa-val');
+        const progressCircle = document.getElementById('calc-progress');
+        const percentText = document.getElementById('calc-percent');
+        const statusText = document.getElementById('calc-status');
+        const priceText = document.getElementById('calc-price');
+        const recBlock = document.getElementById('calc-recommendation');
+        const recSpecText = document.getElementById('calc-rec-spec');
+        
+        // Detailed GPA Elements
+        const toggleBtn = document.getElementById('calc-toggle-btn');
+        const sliderMode = document.getElementById('calc-slider-mode');
+        const subjectsMode = document.getElementById('calc-subjects');
+        const subjLangRadios = document.querySelectorAll('input[name="classLang"]');
+        const subjNames = document.querySelectorAll('.calc-subject-name');
+        const subjGrades = document.querySelectorAll('.calc-subject-grade');
+        
+        if (!specSelect || !gpaRange) return;
+
+        // Base Data: index matches select option values
+        const specs = [
+            { id: 0, cost: '250 000 ₸', th9: 4.0, th11: 4.2 },
+            { id: 1, cost: '280 000 ₸', th9: 4.2, th11: 4.4 },
+            { id: 2, cost: '300 000 ₸', th9: 4.5, th11: 4.6 },
+            { id: 3, cost: '320 000 ₸', th9: 4.1, th11: 4.3 },
+            { id: 4, cost: '350 000 ₸', th9: 4.3, th11: 4.5 },
+            { id: 5, cost: '250 000 ₸', th9: 3.8, th11: 4.0 }
+        ];
+
+        const subjDict = {
+            kk: {
+                kz: ['Қазақ тілі', 'Математика', 'Қазақстан тарихы', 'Орыс тілі'],
+                ru: ['Русский язык', 'Математика', 'История Казахстана', 'Казахский язык']
+            },
+            ru: {
+                kz: ['Казахский язык', 'Математика', 'История Казахстана', 'Русский язык'],
+                ru: ['Русский язык', 'Математика', 'История Казахстана', 'Казахский язык']
+            }
+        };
+
+        function updateSubjectNames() {
+            const docLang = document.documentElement.lang || 'kk';
+            const classLangNode = document.querySelector('input[name="classLang"]:checked');
+            if (!classLangNode) return;
+            
+            const classLang = classLangNode.value;
+            const names = subjDict[docLang][classLang];
+            
+            subjNames.forEach((el, i) => {
+                if (names[i]) el.textContent = names[i];
+            });
+        }
+
+        function calculateExactGPA() {
+            let sum = 0;
+            subjGrades.forEach(select => {
+                sum += parseInt(select.value);
+            });
+            const exactGpa = (sum / 5).toFixed(1);
+            gpaRange.value = exactGpa;
+            calculate();
+        }
+
+        function calculate() {
+            const specId = parseInt(specSelect.value);
+            const gpa = parseFloat(gpaRange.value);
+            const baseNode = document.querySelector('input[name="baseClass"]:checked');
+            const base = baseNode ? baseNode.value : '9';
+            
+            gpaValDisplay.textContent = gpa.toFixed(1);
+            
+            const specData = specs[specId];
+            const threshold = base === '9' ? specData.th9 : specData.th11;
+            
+            let prob = 0;
+            if (gpa >= threshold) {
+                const diff = gpa - threshold;
+                const maxDiff = 5.0 - threshold;
+                prob = 50 + (diff / (maxDiff || 1)) * 49;
+            } else {
+                prob = (gpa / threshold) * 45;
+            }
+            
+            prob = Math.min(99, Math.max(5, Math.round(prob)));
+            
+            // Animation for circle
+            const circumference = 2 * Math.PI * 45; // 282.74
+            const offset = circumference - (prob / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+            
+            // Animate number
+            if (window.gsap) {
+                gsap.to(percentText, {
+                    innerHTML: prob,
+                    duration: 1,
+                    snap: { innerHTML: 1 },
+                    ease: 'power1.inOut'
+                });
+            } else {
+                percentText.textContent = prob;
+            }
+
+            // Update UI Colors & Text
+            const lang = document.documentElement.lang || 'kk';
+            const t = LANG[lang];
+            
+            if (prob >= 75) {
+                progressCircle.style.stroke = '#22c55e';
+                statusText.style.color = '#22c55e';
+                statusText.textContent = t ? t.calcStatusHigh : 'Жоғары мүмкіндік!';
+                recBlock.classList.add('hidden');
+            } else if (prob >= 50) {
+                progressCircle.style.stroke = '#f59e0b';
+                statusText.style.color = '#f59e0b';
+                statusText.textContent = t ? t.calcStatusMed : 'Орташа мүмкіндік';
+                recBlock.classList.add('hidden');
+            } else {
+                progressCircle.style.stroke = '#ef4444';
+                statusText.style.color = '#ef4444';
+                statusText.textContent = t ? t.calcStatusLow : 'Төмен мүмкіндік';
+                
+                // Find an alternative specialty with the lowest threshold
+                const altSpec = specs.slice().sort((a,b) => (base === '9' ? a.th9 - b.th9 : a.th11 - b.th11))[0];
+                if (altSpec.id !== specId) {
+                    recBlock.classList.remove('hidden');
+                    const options = specSelect.options;
+                    recSpecText.textContent = options[altSpec.id].text;
+                } else {
+                    recBlock.classList.add('hidden');
+                }
+            }
+            
+            priceText.textContent = specData.cost;
+        }
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const isHidden = subjectsMode.classList.toggle('hidden');
+                sliderMode.classList.toggle('hidden', !isHidden);
+                
+                const lang = document.documentElement.lang || 'kk';
+                if (isHidden) {
+                    toggleBtn.textContent = lang === 'ru' ? 'Рассчитать по предметам' : 'Пәндер арқылы есептеу';
+                } else {
+                    toggleBtn.textContent = lang === 'ru' ? 'Ввести GPA вручную' : 'GPA қолмен енгізу';
+                    calculateExactGPA();
+                }
+            });
+        }
+
+        specSelect.addEventListener('change', calculate);
+        gpaRange.addEventListener('input', calculate);
+        baseRadios.forEach(r => r.addEventListener('change', calculate));
+        subjLangRadios.forEach(r => r.addEventListener('change', updateSubjectNames));
+        subjGrades.forEach(s => s.addEventListener('change', calculateExactGPA));
+        
+        const langBtn = document.getElementById('lang-toggle');
+        if (langBtn) {
+            langBtn.addEventListener('click', () => {
+                setTimeout(() => {
+                    updateSubjectNames();
+                    
+                    const lang = document.documentElement.lang || 'kk';
+                    if (toggleBtn) {
+                        const isHidden = subjectsMode.classList.contains('hidden');
+                        if (isHidden) {
+                            toggleBtn.textContent = lang === 'ru' ? 'Рассчитать по предметам' : 'Пәндер арқылы есептеу';
+                        } else {
+                            toggleBtn.textContent = lang === 'ru' ? 'Ввести GPA вручную' : 'GPA қолмен енгізу';
+                        }
+                    }
+                    calculate();
+                }, 50);
+            });
+        }
+
+        updateSubjectNames();
+        calculate();
     }
 
     if (document.readyState === 'loading') {
