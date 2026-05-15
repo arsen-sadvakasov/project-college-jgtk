@@ -313,17 +313,7 @@
             });
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
-                if (target) {
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
-                    window.scrollTo({ top, behavior: 'smooth' });
-                }
-            });
-        });
+
     }
 
     // ========================================
@@ -636,7 +626,7 @@
     // ========================================
     const LANG = {
         kk: {
-            navLinks: ['Мамандықтар', 'Миссиямыз', 'Құжаттар', 'Байланыс'],
+            navLinks: ['Басты бет', 'Мамандықтар', 'Колледж туралы', 'Талапкерге', 'Байланыс'],
             logoSub: 'гуманитарлық-техникалық колледжі',
             heroBadge: '2025-2026 оқу жылына қабылдау ашық',
             heroLines: ['Жетісу', 'гуманитарлық-техникалық', 'колледжі'],
@@ -763,10 +753,13 @@
             subjGeo: 'География',
             subjIt: 'Информатика',
             subjEng: 'Шет тілі',
-            subjLit: 'Әдебиет'
+            subjLit: 'Әдебиет',
+            errorTitle: 'Кешіріңіз, бет табылмады',
+            errorDesc: 'Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.',
+            errorBtn: 'Басты бетке оралу'
         },
         ru: {
-            navLinks: ['Специальности', 'Наша миссия', 'Документы', 'Контакты'],
+            navLinks: ['Главная', 'Специальности', 'О колледже', 'Абитуриенту', 'Контакты'],
             logoSub: 'гуманитарно-технический колледж',
             heroBadge: 'Приём на 2025-2026 учебный год открыт',
             heroLines: ['Жетысу', 'гуманитарно-технический', 'колледж'],
@@ -893,7 +886,10 @@
             subjGeo: 'География',
             subjIt: 'Информатика',
             subjEng: 'Иностранный язык',
-            subjLit: 'Литература'
+            subjLit: 'Литература',
+            errorTitle: 'Извините, страница не найдена',
+            errorDesc: 'Возможно, страница, которую вы ищете, была удалена или сменила адрес.',
+            errorBtn: 'Вернуться на главную'
         },
     };
 

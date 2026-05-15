@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <script>
+        if (localStorage.getItem('gtk-theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Кешіріңіз, бет табылмады. Жетісу гуманитарлық-техникалық колледжі.">
+    <title>404 - Бет табылмады | Жетісу ГТК</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="assets/js/vendor/gsap.min.js"></script>
+    <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <!-- ===== PRELOADER ===== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader__content">
+            <h1 class="preloader__title">Жетісу ГТК</h1>
+            <div class="preloader__line"></div>
+        </div>
+    </div>
+
+    <!-- ===== TWO-TIER NAVIGATION ===== -->
+    <nav id="main-nav" class="nav">
+        <div class="nav__top">
+            <div class="nav__container nav__top-inner">
+                <div class="nav__contacts">
+                    <a href="tel:+77272345678" class="nav__contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +7 (727) 234-56-78
+                    </a>
+                </div>
+                <div class="nav__controls">
+                    <button class="nav__a11y-toggle" id="a11y-toggle" aria-label="Көру мүмкіндігі шектеулі жандарға арналған нұсқа">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </button>
+                    <button class="nav__theme-toggle" id="theme-toggle" aria-label="Тақырыпты ауыстыру">
+                        <svg class="theme-icon theme-icon--light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="theme-icon theme-icon--dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <button class="nav__lang-toggle" id="lang-toggle" aria-label="Тілді ауыстыру">
+                        <span class="lang-label" id="lang-label">РУС</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav__bottom">
+            <div class="nav__container nav__bottom-inner">
+                <a href="index.html" class="nav__logo" id="nav-logo">
+                    <img src="assets/img/logo.png" alt="Жетісу ГТК логотипі" class="nav__logo-img">
+                    <div class="nav__logo-text">
+                        <span class="nav__logo-name">Жетісу</span>
+                        <span class="nav__logo-sub">гуманитарлық-техникалық колледжі</span>
+                    </div>
+                </a>
+                <ul class="nav__links" id="nav-links">
+                    <li><a href="index.html" class="nav__link">Басты бет</a></li>
+                    <li><a href="specialties.html" class="nav__link">Мамандықтар</a></li>
+                    <li><a href="about.html" class="nav__link">Колледж туралы</a></li>
+                    <li><a href="admissions.html" class="nav__link">Талапкерге</a></li>
+                    <li><a href="contact.html" class="nav__link nav__link--cta">Байланыс</a></li>
+                </ul>
+                <button class="nav__burger" id="nav-burger" aria-label="Мәзірді ашу">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== ERROR SECTION ===== -->
+    <main class="error-page">
+        <div class="error-content" data-animate="fade-up">
+            <div class="error-code">404</div>
+            <h2 class="error-title" data-i18n="errorTitle">Кешіріңіз, бет табылмады</h2>
+            <p class="error-desc" data-i18n="errorDesc">Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.</p>
+            <div class="error-actions">
+                <a href="index.html" class="btn btn--primary" data-i18n="errorBtn">Басты бетке оралу</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <img src="assets/img/logo.png" alt="Жетісу ГТК" class="footer__logo-img">
+                    <span class="footer__name">Жетісу гуманитарлық-техникалық колледжі</span>
+                </div>
+                <p class="footer__copy">&copy; 2026 Жетісу ГТК. Барлық құқықтар қорғалған. <a href="policy.html" style="color: inherit; opacity: 0.8; margin-left: 15px; font-size: 0.9em;">Құпиялылық саясаты</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

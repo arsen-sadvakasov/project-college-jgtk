@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <script>
+        if (localStorage.getItem('gtk-theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Жетісу гуманитарлық-техникалық колледжі — сапалы білім, заманауи мамандықтар, табысты болашақ. Есік қаласы.">
+    <meta name="keywords" content="Жетісу колледж, Есік колледж, мамандықтар, оқу, қабылдау">
+    <meta name="author" content="Жетісу ГТК">
+    <title>Жетісу гуманитарлық-техникалық колледжі</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="assets/js/vendor/gsap.min.js"></script>
+    <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <!-- ===== PRELOADER ===== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader__content">
+            <h1 class="preloader__title">Жетісу ГТК</h1>
+            <div class="preloader__line"></div>
+        </div>
+    </div>
+
+    <!-- ===== TWO-TIER NAVIGATION ===== -->
+    <nav id="main-nav" class="nav">
+        <!-- Top Strip -->
+        <div class="nav__top">
+            <div class="nav__container nav__top-inner">
+                <div class="nav__contacts">
+                    <a href="tel:+77272345678" class="nav__contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +7 (727) 234-56-78
+                    </a>
+                </div>
+                <div class="nav__controls">
+                    <button class="nav__a11y-toggle" id="a11y-toggle" aria-label="Көру мүмкіндігі шектеулі жандарға арналған нұсқа">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </button>
+                    <button class="nav__theme-toggle" id="theme-toggle" aria-label="Тақырыпты ауыстыру">
+                        <svg class="theme-icon theme-icon--light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="theme-icon theme-icon--dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <button class="nav__lang-toggle" id="lang-toggle" aria-label="Тілді ауыстыру">
+                        <span class="lang-label" id="lang-label">РУС</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Strip -->
+        <div class="nav__bottom">
+            <div class="nav__container nav__bottom-inner">
+                <a href="index.html" class="nav__logo" id="nav-logo">
+                    <img src="assets/img/logo.png" alt="Жетісу ГТК логотипі" class="nav__logo-img">
+                    <div class="nav__logo-text">
+                        <span class="nav__logo-name">Жетісу</span>
+                        <span class="nav__logo-sub">гуманитарлық-техникалық колледжі</span>
+                    </div>
+                </a>
+                <ul class="nav__links" id="nav-links">
+                    <li><a href="index.html" class="nav__link">Басты бет</a></li>
+                    <li><a href="specialties.html" class="nav__link">Мамандықтар</a></li>
+                    <li><a href="about.html" class="nav__link">Колледж туралы</a></li>
+                    <li><a href="admissions.html" class="nav__link">Талапкерге</a></li>
+                    <li><a href="contact.html" class="nav__link nav__link--cta">Байланыс</a></li>
+                </ul>
+                <button class="nav__burger" id="nav-burger" aria-label="Мәзірді ашу">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PROFESSIONS SECTION ===== -->
+    <section id="professions" class="section professions section--first">
+        <div class="container">
+            <div class="section__header" data-animate="fade-up">
+                <span class="section__tag">Мамандықтар</span>
+                <h2 class="section__title">Біздің <span class="text-accent">бағыттарымыз</span></h2>
+                <p class="section__desc">Колледжімізде алты бағыт бойынша заманауи мамандықтар оқытылады</p>
+            </div>
+            <div class="professions__grid">
+
+                <!-- Card 1 -->
+                <article class="prof-card" data-animate="fade-up" data-delay="0.05" data-modal="modal-1">
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-preschool.jpg" alt="Мектепке дейінгі тәрбие">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">01120100</span>
+                        <h3 class="prof-card__title">Мектепке дейінгі тәрбие және оқыту</h3>
+                        <p class="prof-card__desc">Балабақша тәрбиешілері мен педагогтарды даярлау. Балалардың жан-жақты
+                            дамуына ықпал ету.</p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="prof-card" data-animate="fade-up" data-delay="0.1" data-modal="modal-2">
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-accounting.jpg" alt="Есеп және аудит">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">04110100</span>
+                        <h3 class="prof-card__title">Есеп және аудит</h3>
+                        <p class="prof-card__desc">Бухгалтерлік есеп, қаржылық талдау және аудит саласындағы мамандар.</p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="prof-card" data-animate="fade-up" data-delay="0.15" data-modal="modal-3">
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-law.jpg" alt="Құқықтану">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">04201100</span>
+                        <h3 class="prof-card__title">Құқықтану</h3>
+                        <p class="prof-card__desc">Құқық саласының негіздерін меңгерген заңгер-мамандарды даярлау.</p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="prof-card" data-animate="fade-up" data-delay="0.2" data-modal="modal-4">
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-it-networks.jpg" alt="Есептеу техникасы">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">06120100</span>
+                        <h3 class="prof-card__title">Есептеу техникасы және ақпараттық желілер</h3>
+                        <p class="prof-card__desc">Компьютерлік жүйелерді баптау, желілерді басқару және IT-инфрақұрылымды қолдау.</p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+
+                <!-- Card 5 — SOFTWARE ENGINEERING (Featured) -->
+                <article class="prof-card prof-card--featured" data-animate="fade-up" data-delay="0.25"
+                    data-modal="modal-5">
+                    <div class="prof-card__badge">IT</div>
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-software.jpg" alt="Бағдарламалық қамтамасыз ету">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">06130100</span>
+                        <h3 class="prof-card__title">Бағдарламалық қамтамасыз ету</h3>
+                        <p class="prof-card__desc">Веб, мобильді және desktop қосымшаларды жобалау, кодтау және тестілеу.
+                        </p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="prof-card" data-animate="fade-up" data-delay="0.3" data-modal="modal-6">
+                    <div class="prof-card__image">
+                        <img src="assets/img/prof-traffic.jpg" alt="Жол қозғалысын ұйымдастыру">
+                    </div>
+                    <div class="prof-card__content">
+                        <span class="prof-card__code">10410400</span>
+                        <h3 class="prof-card__title">Жол қозғалысын ұйымдастыру</h3>
+                        <p class="prof-card__desc">Көлік логистикасы, жол қауіпсіздігі және қозғалысты реттеу мамандары.</p>
+                        <span class="prof-card__more">Толығырақ →</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODALS ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+
+        <!-- Modal 1: Мектепке дейінгі тәрбие -->
+        <div class="modal" id="modal-1" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">01120100</span>
+            <h3 class="modal__title">Мектепке дейінгі тәрбие және оқыту</h3>
+            <span class="modal__duration">Оқу мерзімі: 3 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">150 000 - 250 000 ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Бұл мамандық бойынша студенттер балалардың дене, психикалық және әлеуметтік дамуын қамтамасыз ету
+                    дағдыларын меңгереді. Оқу бағдарламасы заманауи педагогикалық әдіс-тәсілдерді, балалар психологиясын
+                    және ойын арқылы оқыту технологияларын қамтиды.</p>
+                <p>Түлектер мектепке дейінгі білім беру мекемелерінде тәрбиеші, әдіскер немесе педагог-психолог болып
+                    жұмыс істей алады.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="Балаларды оқыту мен тәрбиелеудің теориялық және практикалық негіздері. Оқу әдістемелері, сабақ жоспарлау мен бағалау жүйесі.">Педагогика</span>
+                    <span class="modal__tech-tag"
+                        data-info="Бала психологиясы, жас ерекшеліктері, мінез-құлық ерекшеліктерін зерттеу. Баланың эмоционалдық және когнитивтік дамуын түсіну.">Психология</span>
+                    <span class="modal__tech-tag"
+                        data-info="Баланың жеке дамуына бағытталған халықаралық білім беру жүйесі. Балалардың өз бетінше зерттеуі мен оқуына негізделген тәсіл.">Монтессори
+                        әдісі</span>
+                    <span class="modal__tech-tag"
+                        data-info="Өнер арқылы балалардың шығармашылық қабілетін дамыту, эмоциялық сауықтыру мен көркем білім берудің тиімді құралы.">Арт-терапия</span>
+                    <span class="modal__tech-tag"
+                        data-info="Балалардың тіл дамуын қадағалау, сөйлеу кемістіктерін анықтау мен түзету. Дыбыс шығаруды дұрыстау әдістері.">Логопедия</span>
+                    <span class="modal__tech-tag"
+                        data-info="Балалардың физикалық дамуын қамтамасыз ету: жаттығулар, ойындар, қимыл белсенділігі мен денсаулық нығайту.">Дене
+                        тәрбиесі</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-1"></div>
+            </div>
+        </div>
+
+        <!-- Modal 2: Есеп және аудит -->
+        <div class="modal" id="modal-2" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">04110100</span>
+            <h3 class="modal__title">Есеп және аудит</h3>
+            <span class="modal__duration">Оқу мерзімі: 3 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">200 000 - 400 000 ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Бұл мамандық қаржылық есепке алу, аудит жүргізу, салық есептілігі және экономикалық талдау
+                    саласындағы теориялық білім мен практикалық дағдылар береді.</p>
+                <p>Түлектер бухгалтер, аудитор, қаржы маманы немесе салық кеңесшісі ретінде жұмысқа орналаса алады.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="Қазақстанда ең көп қолданылатын бухгалтерлік бағдарлама. Шоттарды жүргізу, есептілік жасау мен қаржылық операцияларды автоматтандыру.">1С:
+                        Бухгалтерия</span>
+                    <span class="modal__tech-tag"
+                        data-info="Microsoft Excel бағдарламасында қаржылық кестелер құру, формулалар, диаграммалар мен деректерді талдау дағдылары.">Excel</span>
+                    <span class="modal__tech-tag"
+                        data-info="ҚР Салық кодексі, салық декларацияларын толтыру, салық есептілігін жүргізу мен мемлекеттік органдарға тапсыру ережелері.">Салық
+                        заңнамасы</span>
+                    <span class="modal__tech-tag"
+                        data-info="Халықаралық аудит стандарттары бойынша тексеру әдістемесі, ішкі бақылау жүйесін бағалау мен аудиторлық қорытынды жасау.">Аудит
+                        стандарттары</span>
+                    <span class="modal__tech-tag"
+                        data-info="Кәсіпорын қаржысын бағалау, болжамдау, табыстылық пен өтімділік көрсеткіштерін есептеу мен қаржылық есептілікті талдау.">Қаржылық
+                        талдау</span>
+                    <span class="modal__tech-tag"
+                        data-info="Кәсіпорын ресурстарын жоспарлау жүйесі — қоймалық есеп, сатып алу, өндіріс пен қаржыны біріктірілген бағдарламада басқару.">1С:
+                        ERP</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-2"></div>
+            </div>
+        </div>
+
+        <!-- Modal 3: Құқықтану -->
+        <div class="modal" id="modal-3" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">04201100</span>
+            <h3 class="modal__title">Құқықтану</h3>
+            <span class="modal__duration">Оқу мерзімі: 2 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">200 000 - 450 000 ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Құқықтану мамандығы студенттерге Қазақстан Республикасының заңнамасын, азаматтық, қылмыстық және
+                    еңбек құқығын тереңдей зерттеуге мүмкіндік береді.</p>
+                <p>Түлектер заңгер көмекшісі, құқықтық кеңесші, нотариус көмекшісі немесе мемлекеттік қызметте жұмыс
+                    істей алады.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="Мүліктік және жеке мүліктік емес қатынастарды реттейтін нормалар. Шарттар, мұрагерлік, меншік құқығы мен міндеттемелер.">Азаматтық
+                        құқық</span>
+                    <span class="modal__tech-tag"
+                        data-info="Қылмыстық заңнама: қылмыс түрлері, жазалау шаралары, тергеу процесі мен сот ісін жүргізу негіздері.">Қылмыстық
+                        құқық</span>
+                    <span class="modal__tech-tag"
+                        data-info="ҚР Конституциясы, мемлекеттік құрылыс негіздері, азаматтардың құқықтары мен бостандықтары, билік тармақтары.">Конституциялық
+                        құқық</span>
+                    <span class="modal__tech-tag"
+                        data-info="Жұмыс берушілер мен жұмысшылардың құқықтары мен міндеттері. Еңбек шарттары, демалыс, жалақы мен еңбек дауларын шешу.">Еңбек
+                        құқығы</span>
+                    <span class="modal__tech-tag"
+                        data-info="Мемлекеттік басқару саласы, әкімшілік құқық бұзушылықтар мен олардың жауапкершілігі, лицензиялау мен рұқсат беру.">Әкімшілік
+                        құқық</span>
+                    <span class="modal__tech-tag"
+                        data-info="Заңнаманы іс жүзінде қолдану, құқықтық құжаттар мен арыздар жасау, сот тәжірибесін зерттеу дағдылары.">Құқықтық
+                        сауаттылық</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-3"></div>
+            </div>
+        </div>
+
+        <!-- Modal 4: Есептеу техникасы -->
+        <div class="modal" id="modal-4" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">06120100</span>
+            <h3 class="modal__title">Есептеу техникасы және ақпараттық желілер</h3>
+            <span class="modal__duration">Оқу мерзімі: 2 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">250 000 - 600 000 ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Бұл мамандық компьютерлік жүйелер мен желілерді құру, баптау және қызмет көрсету саласында кәсіби
+                    мамандар даярлайды. Студенттер аппараттық және бағдарламалық қамтамасыз ету бойынша кең ауқымды
+                    білім алады.</p>
+                <p>Түлектер жүйелік әкімші, желілік инженер немесе IT-маман ретінде жұмыс істей алады.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын технологиялар:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="Cisco желілік құрылғыларын конфигурациялау: маршрутизаторлар, коммутаторлар, VLAN баптау мен желілік хаттамалар (TCP/IP, DNS, DHCP).">Cisco
+                        Networking</span>
+                    <span class="modal__tech-tag"
+                        data-info="Microsoft серверлік операциялық жүйесін басқару: Active Directory, DNS, файл сервері, групповые политикалар мен пайдаланушыларды басқару.">Windows
+                        Server</span>
+                    <span class="modal__tech-tag"
+                        data-info="Ашық бастапқы кодты операциялық жүйелермен жұмыс: Ubuntu, CentOS — командалық жол, сервистерді баптау мен автоматтандыру (Bash).">Linux</span>
+                    <span class="modal__tech-tag"
+                        data-info="Ақпаратты қорғау саласы: файрволдар, VPN, шифрлау, желілік қауіптерді анықтау мен алдын алу шаралары.">Желі
+                        қауіпсіздігі</span>
+                    <span class="modal__tech-tag"
+                        data-info="Компьютерлік техниканы жинау, жөндеу мен баптау. Процессорлар, видеокарталар, оперативтік жад, жинақтау құрылғылары.">Аппараттық
+                        қамтамасыз ету</span>
+                    <span class="modal__tech-tag"
+                        data-info="VMware, Hyper-V виртуалды машиналарды құру мен басқару. Серверлерді виртуализациялау, ресурстарды оңтайландыру.">Виртуализация</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-4"></div>
+            </div>
+        </div>
+
+        <!-- Modal 5: Бағдарламалық қамтамасыз ету (Featured) -->
+        <div class="modal modal--wide" id="modal-5" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">06130100</span>
+            <h3 class="modal__title">Бағдарламалық қамтамасыз ету</h3>
+            <span class="modal__duration">Оқу мерзімі: 3 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">300 000 - 800 000+ ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Бағдарламалық қамтамасыз ету мамандығы — заманауи IT-саланың негізі. Студенттер бағдарламалау,
+                    веб-технологиялар, мобильді қосымшалар әзірлеу, деректер қоры және жүйелік талдау бойынша
+                    тереңдетілген білім алады.</p>
+                <p>Оқу барысында студенттер нақты жобалар жасап, хакатондарға қатысып, кәсіби портфолио жинақтайды.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын технологиялар:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="Әмбебап бағдарламалау тілі — веб-әзірлеу (Django, Flask), деректерді талдау (Pandas, NumPy), машиналық оқыту мен автоматтандыру үшін қолданылады.">Python</span>
+                    <span class="modal__tech-tag"
+                        data-info="Веб-бағдарламалаудың негізгі тілі — интерактивті сайттар, серверлік қосымшалар (Node.js) мен мобильді приложениялар жасау үшін.">JavaScript</span>
+                    <span class="modal__tech-tag"
+                        data-info="Веб-беттердің құрылымын (HTML) мен дизайнын (CSS) жасаудың іргетасы. Flexbox, Grid, анимациялар мен адаптивті дизайн.">HTML
+                        / CSS</span>
+                    <span class="modal__tech-tag"
+                        data-info="Facebook жасаған JavaScript кітапханасы — қазіргі заманғы интерактивті веб-қосымшалар мен SPA (Single Page Application) әзірлеу үшін.">React</span>
+                    <span class="modal__tech-tag"
+                        data-info="Python-да жазылған веб-фреймворк — толыққанды веб-сайттар мен API-лар құру, деректер базасымен жұмыс, пайдаланушылар жүйесі.">Django</span>
+                    <span class="modal__tech-tag"
+                        data-info="Қуатты реляциялық деректер қоры — SQL сұраныстар, кестелер, индекстер, транзакциялар мен деректер тұтастығын қамтамасыз ету.">PostgreSQL</span>
+                    <span class="modal__tech-tag"
+                        data-info="Кодты нұсқалау жүйесі мен ынтымақтастық платформасы — кодты сақтау, командалық жұмыс, pull request, code review мен CI/CD.">Git
+                        & GitHub</span>
+                    <span class="modal__tech-tag"
+                        data-info="Ашық бастапқы кодты операциялық жүйе — серверлерді басқару, командалық жол, Bash скрипттері мен DevOps негіздері.">Linux</span>
+                    <span class="modal__tech-tag"
+                        data-info="Жүйелік бағдарламалау тілі — алгоритмдер, ООП (объектіге бағытталған бағдарламалау), жады басқару мен жоғары өнімді қосымшалар. ">C++</span>
+                    <span class="modal__tech-tag"
+                        data-info="UI/UX дизайн құралы — интерфейстерді прототиптеу, дизайн жүйелерін құру, командалық дизайн жұмысы мен интерактивті макеттер.">Figma</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-5"></div>
+            </div>
+        </div>
+
+        <!-- Modal 6: Жол қозғалысын ұйымдастыру -->
+        <div class="modal" id="modal-6" role="dialog" aria-modal="true">
+            <button class="modal__close" aria-label="Жабу">&times;</button>
+            <span class="modal__code">10410400</span>
+            <h3 class="modal__title">Жол қозғалысын ұйымдастыру</h3>
+            <span class="modal__duration">Оқу мерзімі: 2 жыл 10 ай</span>
+            <div class="prof-card__salary" style="margin-top: 16px; margin-bottom: 20px; display: inline-flex;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <span class="salary-label">Орташа жалақы: </span><strong class="prof-card__salary-val" style="margin-left: 8px;">200 000 - 350 000 ₸</strong>
+            </div>
+            <div class="modal__body">
+                <p>Бұл мамандық жол қозғалысы қауіпсіздігін қамтамасыз ету, көлік ағынын басқару және жол-көлік
+                    инфрақұрылымын жоспарлау бойынша білікті мамандар дайындайды.</p>
+                <p>Түлектер жол полициясында, көлік компанияларында, логистикалық орталықтарда немесе мемлекеттік
+                    қызметте жұмыс істей алады.</p>
+            </div>
+            <div class="modal__tech">
+                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
+                <div class="modal__tech-grid">
+                    <span class="modal__tech-tag"
+                        data-info="ҚР жол жүру ережелері, жол қозғалысын реттеу, жүргізуші мен жаяу жүргіншілердің құқықтары, жауапкершілік шаралары.">ЖҚЕ
+                        (Жол ережелері)</span>
+                    <span class="modal__tech-tag"
+                        data-info="Жол инфрақұрылымын жобалау мен сызу бағдарламасы — жолдар, қиылыстар, белгілер мен жол жабдықтарының сызбалары.">AutoCAD</span>
+                    <span class="modal__tech-tag"
+                        data-info="Көлік бағдарын анықтау мен бақылау жүйелері. Жүк тасымалы мен қоғамдық көлікті GPS арқылы қадағалау технологиялары.">GPS
+                        навигация</span>
+                    <span class="modal__tech-tag"
+                        data-info="Көлік ағындарын жоспарлау, жүк тасымалдау маршруттарын оңтайландыру, қойма мен таратуды басқару негіздері.">Логистика</span>
+                    <span class="modal__tech-tag"
+                        data-info="Жол белгілерінің халықаралық жіктелуі: ескерту, тыйым салу, нұсқау белгілері мен жол разметкасын қолдану ережелері.">Жол
+                        белгілері</span>
+                    <span class="modal__tech-tag"
+                        data-info="Көлік құралдарының қоршаған ортаға әсерін бағалау — шу, газ шығарындылары, экологиялық стандарттар мен «жасыл» көлік түрлері.">Экология</span>
+                </div>
+                <div class="modal__tech-info" id="tech-info-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <img src="assets/img/logo.png" alt="Жетісу ГТК" class="footer__logo-img">
+                    <span class="footer__name">Жетісу гуманитарлық-техникалық колледжі</span>
+                </div>
+                <p class="footer__copy">&copy; 2026 Жетісу ГТК. Барлық құқықтар қорғалған. <a href="policy.html" style="color: inherit; opacity: 0.8; margin-left: 15px; font-size: 0.9em;">Құпиялылық саясаты</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/77471727315" target="_blank" rel="noopener" class="float-whatsapp" id="float-whatsapp"
+        aria-label="WhatsApp арқылы хабарласу">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top" aria-label="Жоғарыға">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="18 15 12 9 6 15" />
+        </svg>
+    </button>
+    <!-- Sticky CTA -->
+    <div class="sticky-cta" id="sticky-cta">
+        <p class="sticky-cta__text"><strong data-i18n="stickyCtaText">Қабылдау жүріп жатыр</strong></p>
+        <a href="contact.html" class="btn btn--primary btn--sm sticky-cta__btn" data-i18n="stickyCtaBtn">Құжат тапсыру</a>
+    </div>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="assets/js/vendor/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        // Sync Lenis with GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+    </script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
