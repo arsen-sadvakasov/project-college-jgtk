@@ -1251,6 +1251,54 @@
         initStickyCta();
         initMagneticButtons();
         initRatingSystem();
+        initAccessibility();
+    }
+
+    // ========================================
+    // ACCESSIBILITY MODE
+    // ========================================
+    function initAccessibility() {
+        const btn = document.getElementById('a11y-toggle');
+        if (!btn) return;
+
+        const html = document.documentElement;
+        let isA11y = localStorage.getItem('gtk-a11y') === 'true';
+
+        const applyA11y = (state) => {
+            html.setAttribute('data-a11y', state);
+            btn.classList.toggle('active', state);
+            localStorage.setItem('gtk-a11y', state);
+            
+            if (state) {
+                const msg = html.lang === 'ru' 
+                    ? 'Контраст и выбор цвета: дизайн веб-страницы для пользователей с нарушениями зрения' 
+                    : 'Контраст және түс таңдауы: көру қабілеті шектеулі қолданушылар үшін веб-бет жобалау';
+                showToast(msg);
+            }
+        };
+
+        if (isA11y) applyA11y(true);
+
+        btn.addEventListener('click', () => {
+            isA11y = !isA11y;
+            applyA11y(isA11y);
+        });
+    }
+
+    function showToast(message) {
+        const existing = document.querySelector('.toast-a11y');
+        if (existing) existing.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-a11y';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('visible'), 100);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 600);
+        }, 4000);
     }
 
     if (document.readyState === 'loading') {
