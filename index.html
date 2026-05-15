@@ -2,6 +2,11 @@
 <html lang="kk">
 
 <head>
+    <script>
+        if (localStorage.getItem('gtk-theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
@@ -12,9 +17,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -23,100 +26,128 @@
 </head>
 
 <body>
-
     <!-- ===== PRELOADER ===== -->
     <div class="preloader" id="preloader">
-        <div class="preloader__inner">
-            <img src="logo.png" alt="ГТК" class="preloader__logo">
-            <div class="preloader__spinner"></div>
-            <span class="preloader__text">Жетісу ГТК</span>
+        <div class="preloader__content">
+            <h1 class="preloader__title">Жетісу ГТК</h1>
+            <div class="preloader__line"></div>
         </div>
     </div>
 
-    <!-- ===== NAVIGATION ===== -->
+    <!-- ===== TWO-TIER NAVIGATION ===== -->
     <nav id="main-nav" class="nav">
-        <div class="nav__container">
-            <a href="#hero" class="nav__logo" id="nav-logo">
-                <img src="logo.png" alt="Жетісу ГТК логотипі" class="nav__logo-img">
-                <div class="nav__logo-text">
-                    <span class="nav__logo-name">Жетісу</span>
-                    <span class="nav__logo-sub">гуманитарлық-техникалық колледжі</span>
+        <!-- Top Strip -->
+        <div class="nav__top">
+            <div class="nav__container nav__top-inner">
+                <div class="nav__contacts">
+                    <a href="tel:+77272345678" class="nav__contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +7 (727) 234-56-78
+                    </a>
                 </div>
-            </a>
-            <ul class="nav__links" id="nav-links">
-                <li><a href="#professions" class="nav__link">Мамандықтар</a></li>
-                <li><a href="#mission" class="nav__link">Миссиямыз</a></li>
-                <li><a href="#documents" class="nav__link">Құжаттар</a></li>
-                <li><a href="#contact" class="nav__link nav__link--cta">Байланыс</a></li>
-            </ul>
-            <button class="nav__a11y-toggle" id="a11y-toggle" aria-label="Көру мүмкіндігі шектеулі жандарға арналған нұсқа">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                </svg>
-            </button>
-            <button class="nav__theme-toggle" id="theme-toggle" aria-label="Тақырыпты ауыстыру">
-                <svg class="theme-icon theme-icon--light" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-                <svg class="theme-icon theme-icon--dark" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-            </button>
-            <button class="nav__lang-toggle" id="lang-toggle" aria-label="Тілді ауыстыру">
-                <span class="lang-label" id="lang-label">РУС</span>
-            </button>
-            <button class="nav__burger" id="nav-burger" aria-label="Мәзірді ашу">
-                <span></span><span></span><span></span>
-            </button>
+                <div class="nav__controls">
+                    <button class="nav__a11y-toggle" id="a11y-toggle" aria-label="Көру мүмкіндігі шектеулі жандарға арналған нұсқа">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </button>
+                    <button class="nav__theme-toggle" id="theme-toggle" aria-label="Тақырыпты ауыстыру">
+                        <svg class="theme-icon theme-icon--light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="theme-icon theme-icon--dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <button class="nav__lang-toggle" id="lang-toggle" aria-label="Тілді ауыстыру">
+                        <span class="lang-label" id="lang-label">РУС</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Strip -->
+        <div class="nav__bottom">
+            <div class="nav__container nav__bottom-inner">
+                <a href="#hero" class="nav__logo" id="nav-logo">
+                    <img src="logo.png" alt="Жетісу ГТК логотипі" class="nav__logo-img">
+                    <div class="nav__logo-text">
+                        <span class="nav__logo-name">Жетісу</span>
+                        <span class="nav__logo-sub">гуманитарлық-техникалық колледжі</span>
+                    </div>
+                </a>
+                <ul class="nav__links" id="nav-links">
+                    <li><a href="#professions" class="nav__link">Мамандықтар</a></li>
+                    <li><a href="#mission" class="nav__link">Миссиямыз</a></li>
+                    <li><a href="#documents" class="nav__link">Құжаттар</a></li>
+                    <li><a href="#contact" class="nav__link nav__link--cta">Байланыс</a></li>
+                </ul>
+                <button class="nav__burger" id="nav-burger" aria-label="Мәзірді ашу">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
     <!-- ===== HERO SECTION ===== -->
     <section id="hero" class="hero">
-        <!-- Watermark logo that tracks mouse -->
-        <div class="hero__watermark" id="hero-watermark" aria-hidden="true">ГТК</div>
-        <div class="hero__content">
-            <div class="hero__badge">
-                <span class="hero__badge-dot"></span>
-                2025-2026 оқу жылына қабылдау ашық
-            </div>
-            <h1 class="hero__title">
-                <span class="hero__title-line">Жетісу</span>
-                <span class="hero__title-line hero__title-line--accent">гуманитарлық-техникалық</span>
-                <span class="hero__title-line">колледжі</span>
-            </h1>
-            <p class="hero__subtitle">
-                Болашаққа бастар жол — <strong>сапалы білім</strong> мен шынайы мақсаттан басталады.
-            </p>
-            <div class="hero__actions">
-                <a href="#contact" class="btn btn--primary" id="hero-cta">
-                    <span>Өтініш қалдыру</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+        <div class="container">
+            <div class="bento-grid">
+                
+                <!-- Bento Item 1: Main Content -->
+                <div class="bento-item bento-main" data-animate="fade-up">
+                    <div class="hero__badge">
+                        <span class="hero__badge-dot"></span>
+                        2025-2026 оқу жылына қабылдау ашық
+                    </div>
+                    <h1 class="hero__title">
+                        Жетісу <span class="hero__title-line--accent">гуманитарлық-техникалық</span> колледжі
+                    </h1>
+                    <p class="hero__subtitle">
+                        Болашаққа бастар жол — <strong>сапалы білім</strong> мен шынайы мақсаттан басталады.
+                    </p>
+                    <div class="hero__actions">
+                        <a href="#contact" class="btn btn--primary" id="hero-cta">
+                            <span>Өтініш қалдыру</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bento Item 2: Photo -->
+                <div class="bento-item bento-photo" data-animate="fade-up" data-delay="0.1">
+                    <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=800&q=80" alt="Студенттер">
+                </div>
+
+                <!-- Bento Item 3: Stat -->
+                <div class="bento-item bento-stat" data-animate="fade-up" data-delay="0.2">
+                    <div class="bento-stat-num">95%</div>
+                    <div class="bento-stat-label">Түлектерді жұмысқа орналастыру</div>
+                </div>
+
+                <!-- Bento Item 4: Action/Professions -->
+                <a href="#professions" class="bento-item bento-action" data-animate="fade-up" data-delay="0.3">
+                    <div class="bento-action-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                    <span class="bento-action-label">Барлық мамандықтар</span>
                 </a>
-                <a href="#professions" class="btn btn--ghost" id="hero-explore">
-                    <span>Мамандықтарды көру</span>
-                </a>
+
             </div>
-        </div>
-        <div class="hero__scroll">
-            <div class="hero__scroll-mouse">
-                <div class="hero__scroll-wheel"></div>
-            </div>
-            <span>Төмен қарай</span>
         </div>
     </section>
 
@@ -1138,6 +1169,30 @@
         <a href="#contact" class="btn btn--primary btn--sm sticky-cta__btn" data-i18n="stickyCtaBtn">Құжат тапсыру</a>
     </div>
 
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        // Sync Lenis with GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+    </script>
     <script src="script.js"></script>
 </body>
 

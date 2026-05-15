@@ -55,31 +55,46 @@
         // ── HERO — Cinematic entrance on page load ──
         // First, hide hero elements, then reveal with timeline
         const heroEls = document.querySelectorAll('.hero__badge, .hero__title-line, .hero__subtitle, .hero__actions .btn, .hero__scroll');
-        gsap.set(heroEls, { opacity: 0 });
+        gsap.set(heroEls, { opacity: 0, y: 30 });
         gsap.set('.hero__watermark', { opacity: 0 });
 
-        const heroTl = gsap.timeline({ delay: 0.2 });
+        const heroTl = gsap.timeline();
+
+        // ── PRELOADER ANIMATION ──
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            heroTl
+                .to('.preloader__title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 })
+                .to('.preloader__line', { width: '100%', duration: 1.5, ease: 'expo.inOut' }, '-=0.4')
+                .to('.preloader__content', { opacity: 0, y: -20, duration: 0.8, ease: 'power2.in' }, '+=0.6')
+                .to(preloader, { opacity: 0, duration: 1.2, ease: 'power2.inOut' })
+                .set(preloader, { display: 'none' });
+        } else {
+            heroTl.delay(0.3);
+        }
+
+        // ── HERO REVEAL ──
         heroTl
             .to('.hero__watermark', {
-                opacity: 0.04, scale: 1, duration: 1, ease: 'power2.out',
-            })
+                opacity: 0.05, scale: 1, duration: 2, ease: 'power2.out',
+            }, preloader ? '-=0.8' : 0)
             .to('.hero__badge', {
-                opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.7)',
-            }, '-=0.6')
+                opacity: 1, y: 0, duration: 1.2, ease: 'expo.out',
+            }, '-=1.5')
             .to('.hero__title-line', {
-                opacity: 1, y: 0, duration: 0.7,
-                stagger: 0.12, ease: 'power4.out',
-            }, '-=0.3')
+                opacity: 1, y: 0, duration: 1.5,
+                stagger: 0.15, ease: 'expo.out',
+            }, '-=1.0')
             .to('.hero__subtitle', {
-                opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
-            }, '-=0.4')
+                opacity: 1, y: 0, duration: 1.2, ease: 'power3.out',
+            }, '-=1.2')
             .to('.hero__actions .btn', {
-                opacity: 1, y: 0, scale: 1, duration: 0.5,
-                stagger: 0.1, ease: 'back.out(1.7)',
-            }, '-=0.3')
+                opacity: 1, y: 0, duration: 1,
+                stagger: 0.15, ease: 'expo.out',
+            }, '-=1.0')
             .to('.hero__scroll', {
-                opacity: 1, y: 0, duration: 0.4, ease: 'power3.out',
-            }, '-=0.2');
+                opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+            }, '-=0.5');
 
         // Safety: if something goes wrong, show hero after 2s
         setTimeout(() => {
@@ -110,13 +125,13 @@
         // ── SECTIONS — Slide in/out (transform only, NO opacity) ──
         document.querySelectorAll('.section').forEach((section) => {
             gsap.from(section, {
-                y: 60,
-                duration: 0.8, ease: 'power3.out',
+                y: 40,
+                duration: 1.2, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 92%',
                     end: 'top 50%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
         });
@@ -124,12 +139,12 @@
         // ── SECTION HEADERS — slide up ──
         document.querySelectorAll('.section__header').forEach((header) => {
             gsap.from(header.querySelectorAll('.section__tag, .section__title, .section__desc'), {
-                y: 30,
-                duration: 0.6, stagger: 0.1, ease: 'power3.out',
+                y: 20,
+                duration: 1, stagger: 0.1, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: header,
                     start: 'top 88%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
         });
@@ -138,12 +153,12 @@
         const profCards = document.querySelectorAll('.prof-card');
         if (profCards.length) {
             gsap.from(profCards, {
-                y: 50, scale: 0.95,
-                duration: 0.5, stagger: 0.07, ease: 'power3.out',
+                y: 30,
+                duration: 1, stagger: 0.1, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: '.professions__grid',
                     start: 'top 85%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
         }
@@ -152,12 +167,12 @@
         const missionContent = document.querySelector('.mission__content');
         if (missionContent) {
             gsap.from(missionContent, {
-                x: -60,
-                duration: 0.8, ease: 'power3.out',
+                x: -40,
+                duration: 1.2, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: '.mission__layout',
                     start: 'top 85%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
         }
@@ -165,35 +180,35 @@
         const missionStats = document.querySelector('.mission__stats');
         if (missionStats) {
             gsap.from(missionStats, {
-                x: 60,
-                duration: 0.8, ease: 'power3.out',
+                x: 40,
+                duration: 1.2, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: '.mission__layout',
                     start: 'top 85%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
         }
 
         gsap.from('.mission__feature', {
-            x: -30,
-            duration: 0.5, stagger: 0.1, ease: 'power3.out',
+            x: -20,
+            duration: 0.8, stagger: 0.15, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.mission__features',
                 start: 'top 88%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
 
         // Stats — counter animation
         document.querySelectorAll('.stat-block').forEach((block, i) => {
             gsap.from(block, {
-                y: 30, scale: 0.9,
-                duration: 0.5, delay: i * 0.08, ease: 'back.out(1.7)',
+                y: 20,
+                duration: 1, delay: i * 0.1, ease: 'expo.out',
                 scrollTrigger: {
                     trigger: block,
                     start: 'top 92%',
-                    toggleActions: 'play reverse play reverse',
+                    once: true,
                 },
             });
 
@@ -205,7 +220,7 @@
                     start: 'top 92%',
                     onEnter: () => {
                         gsap.to({ val: 0 }, {
-                            val: target, duration: 2, ease: 'power2.out',
+                            val: target, duration: 3, ease: 'expo.out',
                             onUpdate() { numEl.textContent = Math.round(this.targets()[0].val); },
                         });
                     },
@@ -216,55 +231,55 @@
 
         // ── DOCUMENTS — slide from left ──
         gsap.from('.doc-item', {
-            x: -40,
-            duration: 0.4, stagger: 0.08, ease: 'power3.out',
+            x: -30,
+            duration: 1, stagger: 0.1, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.documents__list',
                 start: 'top 85%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
 
         // ── CONTACT — split entrance ──
         gsap.from('.contact__info', {
-            x: -50,
-            duration: 0.7, ease: 'power3.out',
+            x: -40,
+            duration: 1.2, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.contact__layout',
                 start: 'top 85%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
 
         gsap.from('.contact__form-wrapper', {
-            x: 50,
-            duration: 0.7, ease: 'power3.out',
+            x: 40,
+            duration: 1.2, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.contact__layout',
                 start: 'top 85%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
 
         // ── TIMELINE — stagger items ──
         gsap.from('.timeline__item', {
-            x: -40, scale: 0.95,
-            duration: 0.5, stagger: 0.12, ease: 'power3.out',
+            y: 30,
+            duration: 1, stagger: 0.15, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.timeline__track',
                 start: 'top 85%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
 
         // ── FOOTER ──
         gsap.from('.footer__content', {
             y: 20,
-            duration: 0.5, ease: 'power3.out',
+            duration: 1, ease: 'expo.out',
             scrollTrigger: {
                 trigger: '.footer',
                 start: 'top 95%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
             },
         });
     }
@@ -542,7 +557,7 @@
                 if (typeof gsap !== 'undefined') {
                     gsap.from(successMsg, {
                         scale: 0.8,
-                        opacity: 0,
+                       
                         duration: 0.5,
                         ease: 'back.out(1.7)',
                     });
@@ -626,8 +641,9 @@
             heroBadge: '2025-2026 оқу жылына қабылдау ашық',
             heroLines: ['Жетісу', 'гуманитарлық-техникалық', 'колледжі'],
             heroSub: 'Болашаққа бастар жол — сапалы білім мен шынайы мақсаттан басталады.',
-            heroBtn1: 'Құжат тапсыру',
-            heroBtn2: 'Мамандықтар',
+            heroBtn1: 'Өтініш қалдыру',
+            heroBtn2: 'Барлық мамандықтар',
+            bentoStatLabel: 'Түлектерді жұмысқа орналастыру',
             heroScroll: 'Төмен қарай',
             profTag: 'Мамандықтар',
             profTitle: 'Біздің <span class="text-accent">мамандықтар</span>',
@@ -737,7 +753,17 @@
             calcRecLbl: 'Балама мамандық ұсынамыз:',
             calcStatusHigh: 'Жоғары мүмкіндік!',
             calcStatusMed: 'Орташа мүмкіндік',
-            calcStatusLow: 'Төмен мүмкіндік'
+            calcStatusLow: 'Төмен мүмкіндік',
+            calcBySubjects: 'Пәндер арқылы есептеу',
+            calcLangKz: 'Қазақ сыныбы',
+            calcLangRu: 'Орыс сыныбы',
+            subjPhys: 'Физика',
+            subjChem: 'Химия',
+            subjBio: 'Биология',
+            subjGeo: 'География',
+            subjIt: 'Информатика',
+            subjEng: 'Шет тілі',
+            subjLit: 'Әдебиет'
         },
         ru: {
             navLinks: ['Специальности', 'Наша миссия', 'Документы', 'Контакты'],
@@ -746,7 +772,8 @@
             heroLines: ['Жетысу', 'гуманитарно-технический', 'колледж'],
             heroSub: 'Путь в будущее начинается с качественного образования и настоящих целей.',
             heroBtn1: 'Подать документы',
-            heroBtn2: 'Специальности',
+            heroBtn2: 'Все специальности',
+            bentoStatLabel: 'Трудоустройство выпускников',
             heroScroll: 'Вниз',
             profTag: 'Специальности',
             profTitle: 'Наши <span class="text-accent">специальности</span>',
@@ -856,17 +883,35 @@
             calcRecLbl: 'Предлагаем альтернативу:',
             calcStatusHigh: 'Высокие шансы!',
             calcStatusMed: 'Средние шансы',
-            calcStatusLow: 'Низкие шансы'
+            calcStatusLow: 'Низкие шансы',
+            calcBySubjects: 'Расчет по предметам',
+            calcLangKz: 'Казахский класс',
+            calcLangRu: 'Русский класс',
+            subjPhys: 'Физика',
+            subjChem: 'Химия',
+            subjBio: 'Биология',
+            subjGeo: 'География',
+            subjIt: 'Информатика',
+            subjEng: 'Иностранный язык',
+            subjLit: 'Литература'
         },
     };
 
     function applyLanguage(lang) {
         const t = LANG[lang];
         if (!t) return;
+        
+        document.documentElement.lang = lang;
 
         // Helper: set text/html
         const q = (sel) => document.querySelector(sel);
         const qa = (sel) => document.querySelectorAll(sel);
+
+        // Auto-translate data-i18n
+        qa('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.innerHTML = t[key];
+        });
 
         // Nav links
         qa('.nav__link').forEach((el, i) => {
@@ -889,8 +934,16 @@
         const heroSub = q('.hero__subtitle');
         if (heroSub) heroSub.textContent = t.heroSub;
         const heroBtns = qa('.hero__actions .btn');
-        if (heroBtns[0]) heroBtns[0].textContent = t.heroBtn1;
-        if (heroBtns[1]) heroBtns[1].textContent = t.heroBtn2;
+        if (heroBtns[0]) {
+            const span = heroBtns[0].querySelector('span');
+            if (span) span.textContent = t.heroBtn1;
+        }
+        const bentoAction = q('.bento-action-label');
+        if (bentoAction) bentoAction.textContent = t.heroBtn2;
+        
+        const bentoStat = q('.bento-stat-label');
+        if (bentoStat) bentoStat.textContent = t.bentoStatLabel;
+
         const scrollText = q('.hero__scroll span');
         if (scrollText) scrollText.textContent = t.heroScroll;
 
@@ -1127,12 +1180,19 @@
             if (priceLbl) priceLbl.textContent = t.calcPriceLbl;
             if (recLbl) recLbl.textContent = t.calcRecLbl;
 
+            const langKz = calcSec.querySelector('span[data-i18n="calcLangKz"]');
+            const langRu = calcSec.querySelector('span[data-i18n="calcLangRu"]');
+            if (langKz) langKz.textContent = t.calcLangKz;
+            if (langRu) langRu.textContent = t.calcLangRu;
+
             if (specSelect && t.calcSpecOpts) {
                 Array.from(specSelect.options).forEach((opt, i) => {
                     opt.textContent = t.calcSpecOpts[i];
                 });
             }
         }
+        
+        document.dispatchEvent(new Event('langChanged'));
     }
 
     function initLanguageToggle() {
@@ -1250,7 +1310,7 @@
         function showSuccess() {
             if (typeof gsap !== 'undefined') {
                 gsap.to([form, ratingContainer.parentElement], {
-                    opacity: 0,
+                   
                     y: -10,
                     duration: 0.4,
                     stagger: 0.1,
@@ -1258,7 +1318,7 @@
                         form.style.display = 'none';
                         ratingContainer.parentElement.style.display = 'none';
                         successMsg.style.display = 'block';
-                        gsap.from(successMsg, { scale: 0.8, opacity: 0, duration: 0.5, ease: 'back.out(1.7)' });
+                        gsap.from(successMsg, { scale: 0.8, duration: 0.5, ease: 'back.out(1.7)' });
                     }
                 });
             } else {
@@ -1530,7 +1590,7 @@
         const subjDict = {
             kk: {
                 kz: ['Қазақ тілі', 'Математика', 'Қазақстан тарихы', 'Орыс тілі'],
-                ru: ['Русский язык', 'Математика', 'История Казахстана', 'Казахский язык']
+                ru: ['Орыс тілі', 'Математика', 'Қазақстан тарихы', 'Қазақ тілі']
             },
             ru: {
                 kz: ['Казахский язык', 'Математика', 'История Казахстана', 'Русский язык'],
@@ -1654,25 +1714,20 @@
         subjLangRadios.forEach(r => r.addEventListener('change', updateSubjectNames));
         subjGrades.forEach(s => s.addEventListener('change', calculateExactGPA));
         
-        const langBtn = document.getElementById('lang-toggle');
-        if (langBtn) {
-            langBtn.addEventListener('click', () => {
-                setTimeout(() => {
-                    updateSubjectNames();
-                    
-                    const lang = document.documentElement.lang || 'kk';
-                    if (toggleBtn) {
-                        const isHidden = subjectsMode.classList.contains('hidden');
-                        if (isHidden) {
-                            toggleBtn.textContent = lang === 'ru' ? 'Рассчитать по предметам' : 'Пәндер арқылы есептеу';
-                        } else {
-                            toggleBtn.textContent = lang === 'ru' ? 'Ввести GPA вручную' : 'GPA қолмен енгізу';
-                        }
-                    }
-                    calculate();
-                }, 50);
-            });
-        }
+        document.addEventListener('langChanged', () => {
+            updateSubjectNames();
+            
+            const lang = document.documentElement.lang || 'kk';
+            if (toggleBtn) {
+                const isHidden = subjectsMode.classList.contains('hidden');
+                if (isHidden) {
+                    toggleBtn.textContent = lang === 'ru' ? 'Рассчитать по предметам' : 'Пәндер арқылы есептеу';
+                } else {
+                    toggleBtn.textContent = lang === 'ru' ? 'Ввести GPA вручную' : 'GPA қолмен енгізу';
+                }
+            }
+            calculate();
+        });
 
         updateSubjectNames();
         calculate();
