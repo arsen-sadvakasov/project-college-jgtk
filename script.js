@@ -706,6 +706,16 @@
             ratingSubmit: 'Бағалауды жіберу',
             ratingSuccessTitle: 'Рахмет!',
             ratingSuccessMsg: 'Сіздің бағаңыз қабылданды. Біз сайтты жақсарту үшін жұмыс жасаймыз.',
+            galleryTag: 'Галерея',
+            galleryTitle: 'Студенттік <span class="text-accent">өмір</span>',
+            galleryDesc: 'Колледждегі жарқын сәттер мен оқу процесінен көріністер',
+            galleryCaptions: [
+                'Білім беру процесі',
+                'Заманауи зертханалар',
+                'Студенттік іс-шаралар',
+                'Командалық жобалар',
+                'Бай кітапхана қоры'
+            ],
         },
         ru: {
             navLinks: ['Специальности', 'Наша миссия', 'Документы', 'Контакты'],
@@ -793,6 +803,16 @@
             ratingSubmit: 'Отправить оценку',
             ratingSuccessTitle: 'Спасибо!',
             ratingSuccessMsg: 'Ваша оценка принята. Мы будем работать над улучшением сайта.',
+            galleryTag: 'Галерея',
+            galleryTitle: 'Студенческая <span class="text-accent">жизнь</span>',
+            galleryDesc: 'Яркие моменты и учебный процесс в колледже',
+            galleryCaptions: [
+                'Образовательный процесс',
+                'Современные лаборатории',
+                'Студенческие мероприятия',
+                'Командные проекты',
+                'Богатый библиотечный фонд'
+            ],
         },
     };
 
@@ -1010,6 +1030,24 @@
             if (submit) submit.textContent = t.ratingSubmit;
             if (successH) successH.textContent = t.ratingSuccessTitle;
             if (successP) successP.textContent = t.ratingSuccessMsg;
+        }
+
+        // Gallery
+        const gallerySec = q('#gallery');
+        if (gallerySec) {
+            const tag = gallerySec.querySelector('.section__tag');
+            const title = gallerySec.querySelector('.section__title');
+            const desc = gallerySec.querySelector('.section__desc');
+
+            if (tag) tag.textContent = t.galleryTag;
+            if (title) title.innerHTML = t.galleryTitle;
+            if (desc) desc.textContent = t.galleryDesc;
+
+            qa('.gallery__item-caption').forEach((el, i) => {
+                if (t.galleryCaptions && t.galleryCaptions[i]) {
+                    el.textContent = t.galleryCaptions[i];
+                }
+            });
         }
     }
 
@@ -1252,6 +1290,7 @@
         initMagneticButtons();
         initRatingSystem();
         initAccessibility();
+        initGallery();
     }
 
     // ========================================
@@ -1299,6 +1338,73 @@
             toast.classList.remove('visible');
             setTimeout(() => toast.remove(), 600);
         }, 4000);
+    }
+
+    // ========================================
+    // GALLERY CAROUSEL
+    // ========================================
+    function initGallery() {
+        const slider = document.getElementById('gallery-slider');
+        if (!slider) return;
+
+        const items = Array.from(slider.querySelectorAll('.gallery__item'));
+        const btnPrev = document.getElementById('gallery-prev');
+        const btnNext = document.getElementById('gallery-next');
+        let currentIndex = 0;
+        let autoplayInterval;
+
+        function updateSlider() {
+            items.forEach((item, index) => {
+                item.className = 'gallery__item'; // reset classes
+                if (index === currentIndex) {
+                    item.classList.add('active');
+                } else if (index === (currentIndex - 1 + items.length) % items.length) {
+                    item.classList.add('prev');
+                } else if (index === (currentIndex + 1) % items.length) {
+                    item.classList.add('next');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateSlider();
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            autoplayInterval = setInterval(nextSlide, 4000);
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) clearInterval(autoplayInterval);
+        }
+
+        if (btnPrev) btnPrev.addEventListener('click', () => { prevSlide(); startAutoplay(); });
+        if (btnNext) btnNext.addEventListener('click', () => { nextSlide(); startAutoplay(); });
+
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                if (index !== currentIndex) {
+                    currentIndex = index;
+                    updateSlider();
+                    startAutoplay();
+                }
+            });
+        });
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', stopAutoplay);
+        slider.addEventListener('mouseleave', startAutoplay);
+
+        // Initial setup
+        updateSlider();
+        startAutoplay();
     }
 
     if (document.readyState === 'loading') {
