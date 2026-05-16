@@ -754,6 +754,16 @@
             subjIt: 'Информатика',
             subjEng: 'Шет тілі',
             subjLit: 'Әдебиет',
+            onboardingLangToggle: '🇷🇺 Русский язык',
+            onbTitle1: 'ЖГТК-ға қош келдіңіз!',
+            onbText1: 'Табысты карьераға алғашқы қадам жасаңыз. Біз тек білім емес, сұранысқа ие мамандық береміз.',
+            onbTitle2: '6 заманауи мамандық',
+            onbText2: 'IT-дан бастап құқықтану мен логистикаға дейін. Біздің түлектердің 95%-ы оқу бітіре сала жұмыс табады!',
+            onbTitle3: 'Грантқа түсіңіз',
+            onbText3: 'Қабылдау ережелерімен танысып, грант калькуляторын қолданыңыз және өтінішті онлайн қалдырыңыз!',
+            onbNext: 'Әрі қарай',
+            onbStart: 'Бастау',
+            onbSkip: 'Өткізіп жіберу',
             errorTitle: 'Кешіріңіз, бет табылмады',
             errorDesc: 'Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.',
             errorBtn: 'Басты бетке оралу'
@@ -887,6 +897,16 @@
             subjIt: 'Информатика',
             subjEng: 'Иностранный язык',
             subjLit: 'Литература',
+            onboardingLangToggle: '🇰🇿 Қазақ тілі',
+            onbTitle1: 'Добро пожаловать в ЖГТК!',
+            onbText1: 'Начните свой путь к успешной карьере. Мы даем не просто знания, а востребованную профессию.',
+            onbTitle2: '6 современных специальностей',
+            onbText2: 'От IT и программирования до юриспруденции и логистики. 95% наших выпускников успешно трудоустраиваются!',
+            onbTitle3: 'Поступи на грант',
+            onbText3: 'Ознакомьтесь с правилами приема, используйте калькулятор грантов и подайте заявку онлайн!',
+            onbNext: 'Далее',
+            onbStart: 'Начать просмотр',
+            onbSkip: 'Пропустить',
             errorTitle: 'Извините, страница не найдена',
             errorDesc: 'Возможно, страница, которую вы ищете, была удалена или сменила адрес.',
             errorBtn: 'Вернуться на главную'
@@ -1432,6 +1452,7 @@
         initAccessibility();
         initGallery();
         initCalculator();
+        initOnboarding();
     }
 
     // ========================================
@@ -1727,6 +1748,112 @@
 
         updateSubjectNames();
         calculate();
+    }
+
+    // ========================================
+    // ONBOARDING (MULTI-STEP & LANG TOGGLE)
+    // ========================================
+    function initOnboarding() {
+        const overlay = document.getElementById('onboarding-overlay');
+        if (!overlay) return;
+        
+        // Only show if not seen before
+        if (localStorage.getItem('gtk-onboarding') === 'true') {
+            return; 
+        }
+
+        const langBtn = document.getElementById('onboarding-lang-toggle');
+        const iconEl = document.getElementById('onboarding-icon');
+        const titleEl = document.getElementById('onboarding-title');
+        const textEl = document.getElementById('onboarding-text');
+        const nextBtn = document.getElementById('onboarding-next');
+        const skipBtn = document.getElementById('onboarding-skip');
+        const dots = document.querySelectorAll('#onboarding-dots .dot');
+
+        let currentStep = 0;
+        let currentLang = document.documentElement.lang || 'kk';
+
+        const stepsData = [
+            { icon: '🎓', titleKey: 'onbTitle1', textKey: 'onbText1' },
+            { icon: '💼', titleKey: 'onbTitle2', textKey: 'onbText2' },
+            { icon: '🚀', titleKey: 'onbTitle3', textKey: 'onbText3' }
+        ];
+
+        function updateUI() {
+            const data = LANG[currentLang];
+            const step = stepsData[currentStep];
+
+            // Add smooth fade out/in effect
+            const content = document.querySelector('.onboarding__content');
+            content.style.opacity = '0';
+            
+            setTimeout(() => {
+                langBtn.textContent = data.onboardingLangToggle;
+                iconEl.textContent = step.icon;
+                titleEl.innerHTML = data[step.titleKey];
+                textEl.textContent = data[step.textKey];
+                
+                // Button texts
+                nextBtn.textContent = (currentStep === 2) ? data.onbStart : data.onbNext;
+                skipBtn.textContent = data.onbSkip;
+
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentStep);
+                });
+
+                content.style.opacity = '1';
+            }, 200);
+        }
+
+        // Language toggle
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'kk' : 'ru';
+            
+            // Synchronize main site language
+            document.documentElement.lang = currentLang;
+            
+            // Dispatch a custom event if main language toggle logic relies on it
+            // Or manually translate data-i18n tags so the background site changes too!
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const key = el.getAttribute('data-i18n');
+                if (LANG[currentLang][key]) el.innerHTML = LANG[currentLang][key];
+            });
+            const langLabel = document.getElementById('lang-label');
+            if (langLabel) langLabel.textContent = currentLang === 'ru' ? 'ҚАЗ' : 'РУС';
+            
+            updateUI();
+        });
+
+        // Next button
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < 2) {
+                currentStep++;
+                updateUI();
+            } else {
+                closeOnboarding();
+            }
+        });
+
+        // Skip button
+        skipBtn.addEventListener('click', closeOnboarding);
+
+        function closeOnboarding() {
+            overlay.style.opacity = '0';
+            document.body.style.overflow = '';
+            localStorage.setItem('gtk-onboarding', 'true');
+            setTimeout(() => overlay.style.display = 'none', 500);
+        }
+
+        // Initialize display
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Trigger reflow to apply animation
+        setTimeout(() => {
+            overlay.classList.add('active');
+            updateUI();
+        }, 50);
     }
 
     if (document.readyState === 'loading') {
