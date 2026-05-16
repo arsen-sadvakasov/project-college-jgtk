@@ -1881,7 +1881,7 @@
                 
                 if (role === 'abiturient') {
                     localStorage.setItem('gtk-onboarding', 'true');
-                    // Плавное закрытие и редирект
+                    // Плавное закрытие и редирект на Басты бет
                     if (typeof gsap !== 'undefined') {
                         gsap.to(card, { y: 30, scale: 0.95, opacity: 0, duration: 0.4, ease: 'power2.in' });
                         gsap.to(overlay, { 
@@ -1889,11 +1889,11 @@
                             duration: 0.4, 
                             delay: 0.1,
                             onComplete: () => {
-                                window.location.href = 'admissions.html';
+                                window.location.href = 'index.html';
                             }
                         });
                     } else {
-                        window.location.href = 'admissions.html';
+                        window.location.href = 'index.html';
                     }
                 } else {
                     // Ошибка (Еще в разработке)
