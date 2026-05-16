@@ -250,6 +250,36 @@
         <a href="contact.html" class="btn btn--primary btn--sm sticky-cta__btn" data-i18n="stickyCtaBtn">Құжат тапсыру</a>
     </div>
 
+    <!-- ===== ONBOARDING ===== -->
+    <div id="onboarding-overlay" class="onboarding-overlay" style="display: none;">
+        <div class="onboarding-card">
+            <!-- Длинная кнопка смены языка сверху -->
+            <button id="onboarding-lang-toggle" class="onboarding__lang-btn" aria-label="Сменить язык">🇷🇺 Русский язык</button>
+            
+            <div class="onboarding__content">
+                <!-- Иконка/Эмодзи (будет меняться через JS) -->
+                <div class="onboarding__icon" id="onboarding-icon">🎓</div>
+                <!-- Заголовок и Текст -->
+                <h2 class="onboarding__title" id="onboarding-title">Добро пожаловать в ЖГТК!</h2>
+                <p class="onboarding__text" id="onboarding-text">Начните свой путь к успешной карьере. Мы даем не просто знания, а востребованную профессию.</p>
+            </div>
+
+            <div class="onboarding__footer">
+                <!-- Точки прогресса -->
+                <div class="onboarding__dots" id="onboarding-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <!-- Кнопки управления -->
+                <div class="onboarding__actions">
+                    <button id="onboarding-next" class="btn btn--primary onboarding__btn-next">Далее</button>
+                    <button id="onboarding-skip" class="onboarding__btn-skip">Пропустить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Lenis Smooth Scroll -->
     <script src="assets/js/vendor/lenis.min.js"></script>
     <script>
