@@ -1782,39 +1782,44 @@
         function updateUI() {
             const data = LANG[currentLang];
             const step = stepsData[currentStep];
-
-            // Add smooth fade out/in effect
             const content = document.querySelector('.onboarding__content');
-            content.style.opacity = '0';
-            
-            setTimeout(() => {
+
+            if (typeof gsap !== 'undefined') {
+                // Плавная GSAP-анимация смены контента
+                gsap.to(content, {
+                    opacity: 0,
+                    y: -10,
+                    duration: 0.2,
+                    onComplete: () => {
+                        applyData();
+                        gsap.to(content, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+                    }
+                });
+            } else {
+                applyData();
+            }
+
+            function applyData() {
                 langBtn.textContent = data.onboardingLangToggle;
                 iconEl.textContent = step.icon;
                 titleEl.innerHTML = data[step.titleKey];
                 textEl.textContent = data[step.textKey];
                 
-                // Button texts
                 nextBtn.textContent = (currentStep === 2) ? data.onbStart : data.onbNext;
                 skipBtn.textContent = data.onbSkip;
 
-                // Update dots
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentStep);
                 });
-
-                content.style.opacity = '1';
-            }, 200);
+            }
         }
 
         // Language toggle
         langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'ru' ? 'kk' : 'ru';
             
-            // Synchronize main site language
             document.documentElement.lang = currentLang;
             
-            // Dispatch a custom event if main language toggle logic relies on it
-            // Or manually translate data-i18n tags so the background site changes too!
             document.querySelectorAll('[data-i18n]').forEach((el) => {
                 const key = el.getAttribute('data-i18n');
                 if (LANG[currentLang][key]) el.innerHTML = LANG[currentLang][key];
@@ -1839,21 +1844,47 @@
         skipBtn.addEventListener('click', closeOnboarding);
 
         function closeOnboarding() {
-            overlay.style.opacity = '0';
-            document.body.style.overflow = '';
-            localStorage.setItem('gtk-onboarding', 'true');
-            setTimeout(() => overlay.style.display = 'none', 500);
+            const card = document.querySelector('.onboarding-card');
+            if (typeof gsap !== 'undefined') {
+                // Роскошное закрытие через GSAP
+                gsap.to(card, { y: 30, scale: 0.95, opacity: 0, duration: 0.4, ease: 'power2.in' });
+                gsap.to(overlay, { 
+                    opacity: 0, 
+                    duration: 0.4, 
+                    delay: 0.1,
+                    onComplete: finishClose
+                });
+            } else {
+                finishClose();
+            }
+
+            function finishClose() {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+                localStorage.setItem('gtk-onboarding', 'true');
+            }
         }
 
         // Initialize display
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         
-        // Trigger reflow to apply animation
-        setTimeout(() => {
+        // Стартовая GSAP-анимация (эффект отскока пружины)
+        updateUI(); // сразу ставим правильный язык
+        
+        if (typeof gsap !== 'undefined') {
+            const card = document.querySelector('.onboarding-card');
+            gsap.fromTo(overlay, 
+                { opacity: 0 }, 
+                { opacity: 1, duration: 0.5, ease: 'power2.out' }
+            );
+            gsap.fromTo(card,
+                { y: 60, scale: 0.85, opacity: 0 },
+                { y: 0, scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.5)', delay: 0.2 }
+            );
+        } else {
             overlay.classList.add('active');
-            updateUI();
-        }, 50);
+        }
     }
 
     if (document.readyState === 'loading') {
