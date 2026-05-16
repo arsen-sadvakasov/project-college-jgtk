@@ -764,6 +764,12 @@
             onbNext: 'Әрі қарай',
             onbStart: 'Бастау',
             onbSkip: 'Өткізіп жіберу',
+            onbTitle4: 'Сіз кімсіз?',
+            onbText4: 'Қажетті ақпаратты ұсыну үшін өзіңіздің рөліңізді таңдаңыз.',
+            onbRoleAbiturient: 'Талапкер',
+            onbRoleStudent: 'Студент',
+            onbRoleTeacher: 'Оқытушы',
+            onbRoleError: '⚠️ Бөлім әлі әзірленуде',
             errorTitle: 'Кешіріңіз, бет табылмады',
             errorDesc: 'Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.',
             errorBtn: 'Басты бетке оралу'
@@ -907,6 +913,12 @@
             onbNext: 'Далее',
             onbStart: 'Начать просмотр',
             onbSkip: 'Пропустить',
+            onbTitle4: 'Кто вы?',
+            onbText4: 'Выберите вашу роль, чтобы мы подобрали нужную информацию.',
+            onbRoleAbiturient: 'Абитуриент',
+            onbRoleStudent: 'Студент',
+            onbRoleTeacher: 'Преподаватель',
+            onbRoleError: '⚠️ Раздел еще в разработке',
             errorTitle: 'Извините, страница не найдена',
             errorDesc: 'Возможно, страница, которую вы ищете, была удалена или сменила адрес.',
             errorBtn: 'Вернуться на главную'
@@ -1773,19 +1785,29 @@
         let currentStep = 0;
         let currentLang = document.documentElement.lang || 'kk';
 
+        // Создаем элемент уведомления (Toast)
+        const card = document.querySelector('.onboarding-card');
+        const toast = document.createElement('div');
+        toast.className = 'onboarding-toast';
+        card.appendChild(toast);
+        let toastTimeout;
+
         const stepsData = [
             { icon: '🎓', titleKey: 'onbTitle1', textKey: 'onbText1' },
             { icon: '💼', titleKey: 'onbTitle2', textKey: 'onbText2' },
-            { icon: '🚀', titleKey: 'onbTitle3', textKey: 'onbText3' }
+            { icon: '🚀', titleKey: 'onbTitle3', textKey: 'onbText3' },
+            { icon: '👤', titleKey: 'onbTitle4', textKey: 'onbText4' }
         ];
 
         function updateUI() {
             const data = LANG[currentLang];
             const step = stepsData[currentStep];
             const content = document.querySelector('.onboarding__content');
+            
+            const actionsNormal = document.getElementById('onboarding-actions-normal');
+            const actionsRoles = document.getElementById('onboarding-roles');
 
             if (typeof gsap !== 'undefined') {
-                // Плавная GSAP-анимация смены контента
                 gsap.to(content, {
                     opacity: 0,
                     y: -10,
@@ -1805,8 +1827,19 @@
                 titleEl.innerHTML = data[step.titleKey];
                 textEl.textContent = data[step.textKey];
                 
-                nextBtn.textContent = (currentStep === 2) ? data.onbStart : data.onbNext;
-                skipBtn.textContent = data.onbSkip;
+                if (currentStep === 3) {
+                    actionsNormal.style.display = 'none';
+                    actionsRoles.style.display = 'flex';
+                    
+                    document.getElementById('role-abiturient').textContent = data.onbRoleAbiturient;
+                    document.getElementById('role-student').textContent = data.onbRoleStudent;
+                    document.getElementById('role-teacher').textContent = data.onbRoleTeacher;
+                } else {
+                    actionsNormal.style.display = 'flex';
+                    actionsRoles.style.display = 'none';
+                    nextBtn.textContent = data.onbNext;
+                    skipBtn.textContent = data.onbSkip;
+                }
 
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentStep);
@@ -1832,13 +1865,68 @@
 
         // Next button
         nextBtn.addEventListener('click', () => {
-            if (currentStep < 2) {
+            if (currentStep < 3) {
                 currentStep++;
                 updateUI();
             } else {
                 closeOnboarding();
             }
         });
+
+        // Role buttons logic
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const role = e.target.getAttribute('data-role');
+                const data = LANG[currentLang];
+                
+                if (role === 'abiturient') {
+                    localStorage.setItem('gtk-onboarding', 'true');
+                    // Плавное закрытие и редирект
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(card, { y: 30, scale: 0.95, opacity: 0, duration: 0.4, ease: 'power2.in' });
+                        gsap.to(overlay, { 
+                            opacity: 0, 
+                            duration: 0.4, 
+                            delay: 0.1,
+                            onComplete: () => {
+                                window.location.href = 'admissions.html';
+                            }
+                        });
+                    } else {
+                        window.location.href = 'admissions.html';
+                    }
+                } else {
+                    // Ошибка (Еще в разработке)
+                    showToast(data.onbRoleError);
+                    if (typeof gsap !== 'undefined') {
+                        // Тряска (Shake)
+                        gsap.fromTo(card, 
+                            { x: -5 }, 
+                            { x: 5, duration: 0.05, yoyo: true, repeat: 5, ease: 'linear', onComplete: () => gsap.set(card, { x: 0 }) }
+                        );
+                    }
+                }
+            });
+        });
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            clearTimeout(toastTimeout);
+            
+            if (typeof gsap !== 'undefined') {
+                gsap.to(toast, { opacity: 1, y: -40, duration: 0.3, ease: 'back.out(1.5)' });
+                toastTimeout = setTimeout(() => {
+                    gsap.to(toast, { opacity: 0, y: 0, duration: 0.3, ease: 'power2.in' });
+                }, 2000);
+            } else {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, -40px)';
+                toastTimeout = setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translate(-50%, 0)';
+                }, 2000);
+            }
+        }
 
         // Skip button
         skipBtn.addEventListener('click', closeOnboarding);

@@ -270,11 +270,18 @@
                     <span class="dot active"></span>
                     <span class="dot"></span>
                     <span class="dot"></span>
+                    <span class="dot"></span>
                 </div>
                 <!-- Кнопки управления -->
-                <div class="onboarding__actions">
+                <div class="onboarding__actions" id="onboarding-actions-normal">
                     <button id="onboarding-next" class="btn btn--primary onboarding__btn-next">Далее</button>
                     <button id="onboarding-skip" class="onboarding__btn-skip">Пропустить</button>
+                </div>
+                <!-- Выбор ролей (скрыто до 4 шага) -->
+                <div class="onboarding__roles" id="onboarding-roles" style="display: none;">
+                    <button class="btn btn--primary btn--full role-btn" data-role="abiturient" id="role-abiturient">Абитуриент</button>
+                    <button class="btn btn--ghost btn--full role-btn" data-role="student" id="role-student">Студент</button>
+                    <button class="btn btn--ghost btn--full role-btn" data-role="teacher" id="role-teacher">Преподаватель</button>
                 </div>
             </div>
         </div>

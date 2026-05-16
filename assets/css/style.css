@@ -2827,6 +2827,30 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 .onboarding__btn-skip:hover { color: var(--navy); }
 [data-theme="dark"] .onboarding__btn-skip:hover { color: #FDFBF7; }
 
+.onboarding__roles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.onboarding-toast {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--error);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(140, 47, 47, 0.4);
+    z-index: 100;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 480px) {
     .onboarding-card { padding: 30px 20px; }
