@@ -13,3 +13,4 @@ npm-debug.log*
 
 # Project specific
 assets/js/vendor/*.map
+dist/

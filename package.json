@@ -1,0 +1,26 @@
+{
+  "name": "project-college-jgtk",
+  "version": "1.0.0",
+  "description": "Ресми веб-сайт Жетісу гуманитарлық-техникалық колледжі (Есік қаласы). Сайт заманауи дизайнмен, интерактивті элементтермен және толыққанды ақпараттық блоктармен жабдықталған.",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arsen-sadvakasov/project-college-jgtk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/arsen-sadvakasov/project-college-jgtk/issues"
+  },
+  "homepage": "https://github.com/arsen-sadvakasov/project-college-jgtk#readme",
+  "devDependencies": {
+    "vite": "^8.0.13"
+  }
+}
