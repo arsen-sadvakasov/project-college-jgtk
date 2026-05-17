@@ -2593,6 +2593,28 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     .gallery__item { width: 80%; }
     .gallery__item.prev { transform: scale(0.85) translateX(-35%) translateZ(-150px); }
     .gallery__item.next { transform: scale(0.85) translateX(35%) translateZ(-150px); }
+
+    /* Form inputs and textareas touch-friendly size */
+    .contact-form__input {
+        padding: 14px 0;
+        min-height: 48px;
+    }
+    
+    /* Onboarding Card Role Buttons full-width */
+    .onboarding__roles .btn {
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+    }
+    
+    /* Specialty Detail Modal close touch-target */
+    .modal__close {
+        width: 44px;
+        height: 44px;
+        font-size: 1.8rem;
+        top: 8px;
+        right: 8px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2670,6 +2692,48 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
         font-size: 0.95rem;
     }
     
+    /* Onboarding Card Compact Mobile */
+    .onboarding-card {
+        padding: 24px 16px;
+    }
+    .onboarding__lang-btn {
+        margin-bottom: 20px;
+    }
+    .onboarding__title {
+        font-size: 1.4rem;
+    }
+    .onboarding__text {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+    }
+    .onboarding__dots {
+        gap: 6px;
+    }
+    .onboarding__dots .dot {
+        width: 6px;
+        height: 6px;
+    }
+    .onboarding__dots .dot.active {
+        width: 18px;
+    }
+    .onboarding__footer {
+        gap: 16px;
+    }
+    .onboarding__actions {
+        gap: 10px;
+    }
+    .onboarding-toast {
+        font-size: 0.82rem;
+        padding: 8px 18px;
+        bottom: -50px;
+    }
+
+    /* Modal padding & bounds on small screen */
+    .modal {
+        padding: 24px 16px;
+        max-height: 90vh;
+    }
+
     .rating__card { padding: 32px 20px; }
     .rating__stars { gap: 4px; }
     .star svg { width: 28px; height: 28px; }
