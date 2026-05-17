@@ -2527,6 +2527,33 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 
     .btn { width: 100%; max-width: 300px; }
 
+    /* Spacing & Sections */
+    .calc-section {
+        padding: 60px 0;
+    }
+
+    /* Grant Calculator Mobile Layout */
+    .calc-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .calc-card {
+        padding: 32px 24px;
+    }
+    .calc-range::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+    }
+    .calc-range::-moz-range-thumb {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Professions Mobile Card Padding */
+    .prof-card__content {
+        padding: 24px;
+    }
+
     .modal { padding: 28px 20px; max-width: 95%; }
     .contact-form { padding: 28px 20px; }
 
@@ -2594,6 +2621,53 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
     }
     .bento-photo {
         height: 200px;
+    }
+    
+    /* Spacing & Sections */
+    .calc-section {
+        padding: 40px 0;
+    }
+
+    /* Calculator Small Screen Refinements */
+    .calc-card {
+        padding: 24px 16px;
+    }
+    .calc-radio-group {
+        gap: 10px;
+    }
+    .calc-radio span {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+    .calc-result {
+        padding: 24px 16px;
+    }
+    .calc-result__circle {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 16px;
+    }
+    .calc-result__val {
+        font-size: 2rem;
+    }
+    
+    /* Professions Mobile Cards */
+    .prof-card__content {
+        padding: 20px;
+    }
+
+    /* Documents List Compact Mobile */
+    .doc-item {
+        padding: 16px;
+        gap: 12px;
+    }
+    .doc-item__number {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+    }
+    .doc-item__content strong {
+        font-size: 0.95rem;
     }
     
     .rating__card { padding: 32px 20px; }
