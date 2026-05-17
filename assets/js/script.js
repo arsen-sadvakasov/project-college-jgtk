@@ -606,9 +606,9 @@
     // ========================================
     function initThemeToggle() {
         const btn = document.getElementById('theme-toggle');
-        if (!btn) return;
+        const btnMob = document.getElementById('theme-toggle-mob');
 
-        btn.addEventListener('click', () => {
+        const toggle = () => {
             const html = document.documentElement;
             const isDark = html.getAttribute('data-theme') === 'dark';
             const newTheme = isDark ? 'light' : 'dark';
@@ -618,7 +618,10 @@
 
             document.body.style.transition = 'background 0.4s ease, color 0.4s ease';
             setTimeout(() => { document.body.style.transition = ''; }, 500);
-        });
+        };
+
+        if (btn) btn.addEventListener('click', toggle);
+        if (btnMob) btnMob.addEventListener('click', toggle);
     }
 
     // ========================================
@@ -1226,22 +1229,31 @@
     function initLanguageToggle() {
         const btn = document.getElementById('lang-toggle');
         const label = document.getElementById('lang-label');
-        if (!btn || !label) return;
+        const btnMob = document.getElementById('lang-toggle-mob');
+        const labelMob = document.getElementById('lang-label-mob');
 
         let currentLang = localStorage.getItem('gtk-lang') || 'kk';
+
+        const updateLabels = (lang) => {
+            if (label) label.textContent = lang === 'kk' ? 'РУС' : 'ҚАЗ';
+            if (labelMob) labelMob.textContent = lang === 'kk' ? 'РУС' : 'ҚАЗ';
+        };
 
         // Apply saved language on load
         if (currentLang === 'ru') {
             applyLanguage('ru');
-            label.textContent = 'ҚАЗ';
+            updateLabels('ru');
         }
 
-        btn.addEventListener('click', () => {
+        const toggle = () => {
             currentLang = currentLang === 'kk' ? 'ru' : 'kk';
             applyLanguage(currentLang);
-            label.textContent = currentLang === 'kk' ? 'РУС' : 'ҚАЗ';
+            updateLabels(currentLang);
             localStorage.setItem('gtk-lang', currentLang);
-        });
+        };
+
+        if (btn) btn.addEventListener('click', toggle);
+        if (btnMob) btnMob.addEventListener('click', toggle);
     }
 
     // Restore saved theme immediately (before init)
@@ -1472,14 +1484,15 @@
     // ========================================
     function initAccessibility() {
         const btn = document.getElementById('a11y-toggle');
-        if (!btn) return;
+        const btnMob = document.getElementById('a11y-toggle-mob');
 
         const html = document.documentElement;
         let isA11y = localStorage.getItem('gtk-a11y') === 'true';
 
         const applyA11y = (state) => {
             html.setAttribute('data-a11y', state);
-            btn.classList.toggle('active', state);
+            if (btn) btn.classList.toggle('active', state);
+            if (btnMob) btnMob.classList.toggle('active', state);
             localStorage.setItem('gtk-a11y', state);
             
             if (state) {
@@ -1492,10 +1505,13 @@
 
         if (isA11y) applyA11y(true);
 
-        btn.addEventListener('click', () => {
+        const toggle = () => {
             isA11y = !isA11y;
             applyA11y(isA11y);
-        });
+        };
+
+        if (btn) btn.addEventListener('click', toggle);
+        if (btnMob) btnMob.addEventListener('click', toggle);
     }
 
     function showToast(message) {
