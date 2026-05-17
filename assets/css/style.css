@@ -286,6 +286,36 @@ body {
     overflow-x: hidden;
 }
 
+/* Premium Custom Scrollbars for Desktop */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--off-white);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(184, 147, 90, 0.35);
+    border-radius: 5px;
+    border: 2px solid var(--off-white);
+    transition: 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(184, 147, 90, 0.65);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #1C120C;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(184, 147, 90, 0.35);
+    border-radius: 5px;
+    border: 2px solid #1C120C;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(184, 147, 90, 0.65);
+}
+
 h1, h2, h3, h4, h5, h6, .hero__title, .section__title {
     font-family: var(--font-serif);
     font-weight: 600;
@@ -2419,6 +2449,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
         transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         gap: 24px;
         z-index: 999;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     [data-theme="dark"] .nav__links {
@@ -2621,6 +2653,15 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
         font-size: 1.8rem;
         top: 8px;
         right: 8px;
+    }
+
+    /* Native, slim scrollbars for mobile touchscreens */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(184, 147, 90, 0.2);
     }
 }
 
