@@ -443,7 +443,7 @@
                     const reqId = node.getAttribute('data-requires');
                     const currentLang = document.documentElement.lang || 'ru';
                     const reqName = LANG[currentLang][`skill_${reqId.replace(/-/g, '_')}`] || reqId;
-                    
+
                     toast.textContent = (LANG[currentLang].skillsLockedWarning || 'Сначала разблокируйте: ') + reqName;
                     toast.classList.add('show');
 
@@ -461,8 +461,8 @@
 
                     // Play beautiful GSAP wave/pop animation
                     if (window.gsap) {
-                        gsap.fromTo(node, 
-                            { scale: 0.95, boxShadow: '0 0 0px rgba(184, 147, 90, 0)' }, 
+                        gsap.fromTo(node,
+                            { scale: 0.95, boxShadow: '0 0 0px rgba(184, 147, 90, 0)' },
                             { scale: 1.05, boxShadow: '0 0 25px rgba(184, 147, 90, 0.6)', duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }
                         );
                     }
@@ -604,7 +604,7 @@
 
         // GSAP animate content fade-in
         if (window.gsap) {
-            gsap.fromTo(content, 
+            gsap.fromTo(content,
                 { opacity: 0, y: 10 },
                 { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
             );
@@ -727,7 +727,7 @@
                 if (typeof gsap !== 'undefined') {
                     gsap.from(successMsg, {
                         scale: 0.8,
-                       
+
                         duration: 0.5,
                         ease: 'back.out(1.7)',
                     });
@@ -957,28 +957,28 @@
             errorDesc: 'Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.',
             errorBtn: 'Басты бетке оралу',
             skillsTreeTitle: 'Оқу траекториясы: Дағдылар ағашы',
-            level1Title: '1 Курс: Базалық деңгей',
+            level1Title: '1 Курс: Жалпы білім беретін пәндер',
             level2Title: '2-3 Курс: Мамандандыру',
             level3Title: '4 Курс: Кәсіби деңгей',
             skillsTreePlaceholder: 'Пәнді таңдап, оның сипаттамасын көру үшін және келесі деңгейлерді ашу үшін оның үстінен басыңыз.',
             skillsAcquiredTitle: 'Алынатын дағдылар:',
             skillsLockedWarning: 'Салдарлық байланыс! Алдымен бұл пәннің алдыңғы талаптарын ашыңыз: ',
-            skill_ped_base: 'Педагогика негіздері',
+            skill_ped_base: 'Жалпы білім беретін пәндер',
             skill_psych_pro: 'Балалар психологиясы',
             skill_expert_method: 'Монтессори & Логопедия',
-            skill_fin_base: 'Математика және қаржы',
+            skill_fin_base: 'Жалпы білім беретін пәндер',
             skill_tax_pro: '1С Бухгалтерия & Салық',
             skill_audit_expert: 'Аудит және қаржылық талдау',
-            skill_law_base: 'Құқық негіздері',
+            skill_law_base: 'Жалпы білім беретін пәндер',
             skill_court_pro: 'Азаматтық & Қылмыстық құқық',
             skill_lawyer_expert: 'Адвокаттық тәжірибе & Сот',
-            skill_net_base: 'Желілер & Железо',
+            skill_net_base: 'Жалпы білім беретін пәндер',
             skill_sys_pro: 'Жүйелік әкімшілік',
             skill_security_expert: 'Киберқауіпсіздік & Cloud',
-            skill_flow_base: 'Алгоритмдеу негіздері',
+            skill_flow_base: 'Жалпы білім беретін пәндер',
             skill_web_pro: 'Веб-әзірлеу (Python/JS)',
             skill_mobile_expert: 'Мобильді қосымшалар & React',
-            skill_traffic_base: 'Жол қозғалысының ережелері',
+            skill_traffic_base: 'Жалпы білім беретін пәндер',
             skill_log_pro: 'Транспорттық логистика',
             skill_safety_expert: 'Көліктегі қауіпсіздік',
             skillsRegistry: {
@@ -1241,7 +1241,7 @@
             errorDesc: 'Возможно, страница, которую вы ищете, была удалена или сменила адрес.',
             errorBtn: 'Вернуться на главную',
             skillsTreeTitle: 'Траектория обучения: Дерево навыков',
-            level1Title: '1 Курс: Базовый уровень',
+            level1Title: '1 Курс: Общеобразовательные дисциплины',
             level2Title: '2-3 Курс: Специализация',
             level3Title: '4 Курс: Профессионал',
             skillsTreePlaceholder: 'Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.',
@@ -1267,10 +1267,10 @@
             skill_safety_expert: 'Безопасность на транспорте',
             skillsRegistry: {
                 'ped-base': {
-                    name: 'Основы педагогики',
-                    icon: '📚',
-                    desc: 'Теоретические и практические основы обучения и воспитания детей. Методики преподавания, планирование уроков и система оценки.',
-                    skills: ['Планирование занятий', 'Теория воспитания', 'Методические основы']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с общественно-гуманитарным уклоном: языки, литература, история, основы общества.',
+                    skills: ['Казахский язык и литература', 'История Казахстана', 'Иностранный язык', 'Биология', 'Обществознание']
                 },
                 'psych-pro': {
                     name: 'Детская психология',
@@ -1285,10 +1285,10 @@
                     skills: ['Работа с материалами Монтессори', 'Основы логопедической терапии', 'Создание развивающей среды']
                 },
                 'fin-base': {
-                    name: 'Математика и Финансы',
-                    icon: '📊',
-                    desc: 'Основы финансовой математики, процентные вычисления, экономическая теория и структура финансовой системы.',
-                    skills: ['Финансовые расчеты', 'Экономический анализ', 'Основные финансовые показатели']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с экономико-математическим уклоном: математика, география, история.',
+                    skills: ['Алгебра и начала анализа', 'География', 'История Казахстана', 'Экономические основы', 'Иностранный язык']
                 },
                 'tax-pro': {
                     name: '1С Бухгалтерия & Налоги',
@@ -1303,10 +1303,10 @@
                     skills: ['Аудиторская проверка', 'Анализ финансовой отчетности', 'Управление финансовыми рисками']
                 },
                 'law-base': {
-                    name: 'Основы права',
-                    icon: '⚖️',
-                    desc: 'Основы теории государства и права, Конституционное право РК, общая структура судебной и правовой системы.',
-                    skills: ['Анализ правовых норм', 'Основы конституционного права', 'Структура государственных органов']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с общественно-гуманитарным и правовым уклоном.',
+                    skills: ['История Казахстана', 'Всемирная история', 'Основы права', 'Русский язык', 'Человек. Общество. Право']
                 },
                 'court-pro': {
                     name: 'Гражданское & Уголовное право',
@@ -1321,10 +1321,10 @@
                     skills: ['Тактика защиты в суде', 'Подготовка юридических документов', 'Ведение судебного процесса']
                 },
                 'net-base': {
-                    name: 'Сети & Железо',
-                    icon: '🔌',
-                    desc: 'Основы сетевых технологий (TCP/IP), сборка, настройка компьютерной техники и ее аппаратное устройство.',
-                    skills: ['Сборка и ремонт ПК', 'Обжимка и настройка сети', 'Понимание сетевых протоколов']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с естественно-математическим и техническим уклоном: математика, физика, информатика.',
+                    skills: ['Алгебра и геометрия', 'Физика', 'Информатика', 'Химия', 'Иностранный язык']
                 },
                 'sys-pro': {
                     name: 'Системное администрирование',
@@ -1339,10 +1339,10 @@
                     skills: ['Проведение аудита безопасности', 'Защита облачных ресурсов', 'Построение безопасных сетей']
                 },
                 'flow-base': {
-                    name: 'Основы алгоритмизации',
-                    icon: '📝',
-                    desc: 'Построение алгоритмов, развитие логического мышления, основные концепции программирования и реализация алгоритмов на C++.',
-                    skills: ['Алгоритмическая логика', 'Базовый синтаксис C++', 'Декомпозиция задач']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с естественно-математическим уклоном: математика, информатика, физика.',
+                    skills: ['Алгебра и геометрия', 'Информатика и программирование', 'Физика', 'Русский язык', 'Иностранный язык']
                 },
                 'web-pro': {
                     name: 'Веб-разработка',
@@ -1357,10 +1357,10 @@
                     skills: ['Разработка React SPA', 'Дизайн мобильных интерфейсов', 'Интеграция API и стейт-менеджмент']
                 },
                 'traffic-base': {
-                    name: 'Правила движения',
-                    icon: '🚦',
-                    desc: 'Изучение Правил дорожного движения РК (ПДД), применение дорожных знаков и разметки, основы безопасности движения.',
-                    skills: ['Знание законодательства ПДД', 'Анализ аварийных ситуаций', 'Применение знаков регулирования']
+                    name: 'Общеобразовательные дисциплины',
+                    icon: '📖',
+                    desc: 'Изучение школьной программы 10-11 классов с техническим уклоном: математика, физика, черчение.',
+                    skills: ['Алгебра и геометрия', 'Физика', 'Черчение', 'История Казахстана', 'География']
                 },
                 'log-pro': {
                     name: 'Транспортная логистика',
@@ -1381,7 +1381,7 @@
     function applyLanguage(lang) {
         const t = LANG[lang];
         if (!t) return;
-        
+
         document.documentElement.lang = lang;
 
         // Helper: set text/html
@@ -1421,7 +1421,7 @@
         }
         const bentoAction = q('.bento-action-label');
         if (bentoAction) bentoAction.textContent = t.heroBtn2;
-        
+
         const bentoStat = q('.bento-stat-label');
         if (bentoStat) bentoStat.textContent = t.bentoStatLabel;
 
@@ -1445,13 +1445,13 @@
                 const cd = card.querySelector('.prof-card__desc');
                 const cm = card.querySelector('.prof-card__more');
                 const cdur = card.querySelector('.prof-card__dur-text');
-                
+
                 if (ct) ct.textContent = c.title;
                 if (cd) cd.textContent = c.desc;
                 if (cm) cm.textContent = c.more;
                 if (cdur) cdur.textContent = t.profDuration;
             });
-            
+
             qa('.salary-label').forEach(lbl => {
                 if (t.profSalaryLabel) lbl.textContent = t.profSalaryLabel;
             });
@@ -1649,7 +1649,7 @@
             if (tag) tag.textContent = t.calcTag;
             if (title) title.innerHTML = t.calcTitle;
             if (desc) desc.textContent = t.calcDesc;
-            
+
             if (labels[0]) labels[0].textContent = t.calcBase;
             if (labels[1]) labels[1].textContent = t.calcSpec;
             if (labels[2] && labels[2].querySelector('span[data-i18n="calcGpa"]')) {
@@ -1686,7 +1686,7 @@
                 }, 100);
             }
         }
-        
+
         document.dispatchEvent(new Event('langChanged'));
     }
 
@@ -1814,7 +1814,7 @@
         function showSuccess() {
             if (typeof gsap !== 'undefined') {
                 gsap.to([form, ratingContainer.parentElement], {
-                   
+
                     y: -10,
                     duration: 0.4,
                     stagger: 0.1,
@@ -1958,10 +1958,10 @@
             if (btn) btn.classList.toggle('active', state);
             if (btnMob) btnMob.classList.toggle('active', state);
             localStorage.setItem('gtk-a11y', state);
-            
+
             if (state) {
-                const msg = html.lang === 'ru' 
-                    ? 'Контраст и выбор цвета: дизайн веб-страницы для пользователей с нарушениями зрения' 
+                const msg = html.lang === 'ru'
+                    ? 'Контраст и выбор цвета: дизайн веб-страницы для пользователей с нарушениями зрения'
                     : 'Контраст және түс таңдауы: көру қабілеті шектеулі қолданушылар үшін веб-бет жобалау';
                 showToast(msg);
             }
@@ -2099,7 +2099,7 @@
         const priceText = document.getElementById('calc-price');
         const recBlock = document.getElementById('calc-recommendation');
         const recSpecText = document.getElementById('calc-rec-spec');
-        
+
         // Detailed GPA Elements
         const toggleBtn = document.getElementById('calc-toggle-btn');
         const sliderMode = document.getElementById('calc-slider-mode');
@@ -2107,7 +2107,7 @@
         const subjLangRadios = document.querySelectorAll('input[name="classLang"]');
         const subjNames = document.querySelectorAll('.calc-subject-name');
         const subjGrades = document.querySelectorAll('.calc-subject-grade');
-        
+
         if (!specSelect || !gpaRange) return;
 
         // Base Data: index matches select option values
@@ -2135,10 +2135,10 @@
             const docLang = document.documentElement.lang || 'kk';
             const classLangNode = document.querySelector('input[name="classLang"]:checked');
             if (!classLangNode) return;
-            
+
             const classLang = classLangNode.value;
             const names = subjDict[docLang][classLang];
-            
+
             subjNames.forEach((el, i) => {
                 if (names[i]) el.textContent = names[i];
             });
@@ -2159,12 +2159,12 @@
             const gpa = parseFloat(gpaRange.value);
             const baseNode = document.querySelector('input[name="baseClass"]:checked');
             const base = baseNode ? baseNode.value : '9';
-            
+
             gpaValDisplay.textContent = gpa.toFixed(1);
-            
+
             const specData = specs[specId];
             const threshold = base === '9' ? specData.th9 : specData.th11;
-            
+
             let prob = 0;
             if (gpa >= threshold) {
                 const diff = gpa - threshold;
@@ -2173,14 +2173,14 @@
             } else {
                 prob = (gpa / threshold) * 45;
             }
-            
+
             prob = Math.min(99, Math.max(5, Math.round(prob)));
-            
+
             // Animation for circle
             const circumference = 2 * Math.PI * 45; // 282.74
             const offset = circumference - (prob / 100) * circumference;
             progressCircle.style.strokeDashoffset = offset;
-            
+
             // Animate number
             if (window.gsap) {
                 gsap.to(percentText, {
@@ -2196,7 +2196,7 @@
             // Update UI Colors & Text
             const lang = document.documentElement.lang || 'kk';
             const t = LANG[lang];
-            
+
             if (prob >= 75) {
                 progressCircle.style.stroke = '#22c55e';
                 statusText.style.color = '#22c55e';
@@ -2211,9 +2211,9 @@
                 progressCircle.style.stroke = '#ef4444';
                 statusText.style.color = '#ef4444';
                 statusText.textContent = t ? t.calcStatusLow : 'Төмен мүмкіндік';
-                
+
                 // Find an alternative specialty with the lowest threshold
-                const altSpec = specs.slice().sort((a,b) => (base === '9' ? a.th9 - b.th9 : a.th11 - b.th11))[0];
+                const altSpec = specs.slice().sort((a, b) => (base === '9' ? a.th9 - b.th9 : a.th11 - b.th11))[0];
                 if (altSpec.id !== specId) {
                     recBlock.classList.remove('hidden');
                     const options = specSelect.options;
@@ -2222,7 +2222,7 @@
                     recBlock.classList.add('hidden');
                 }
             }
-            
+
             priceText.textContent = specData.cost;
         }
 
@@ -2230,7 +2230,7 @@
             toggleBtn.addEventListener('click', () => {
                 const isHidden = subjectsMode.classList.toggle('hidden');
                 sliderMode.classList.toggle('hidden', !isHidden);
-                
+
                 const lang = document.documentElement.lang || 'kk';
                 if (isHidden) {
                     toggleBtn.textContent = lang === 'ru' ? 'Рассчитать по предметам' : 'Пәндер арқылы есептеу';
@@ -2246,10 +2246,10 @@
         baseRadios.forEach(r => r.addEventListener('change', calculate));
         subjLangRadios.forEach(r => r.addEventListener('change', updateSubjectNames));
         subjGrades.forEach(s => s.addEventListener('change', calculateExactGPA));
-        
+
         document.addEventListener('langChanged', () => {
             updateSubjectNames();
-            
+
             const lang = document.documentElement.lang || 'kk';
             if (toggleBtn) {
                 const isHidden = subjectsMode.classList.contains('hidden');
@@ -2272,10 +2272,10 @@
     function initOnboarding() {
         const overlay = document.getElementById('onboarding-overlay');
         if (!overlay) return;
-        
+
         // Only show if not seen before
         if (localStorage.getItem('gtk-onboarding') === 'true') {
-            return; 
+            return;
         }
 
         const langBtn = document.getElementById('onboarding-lang-toggle');
@@ -2307,7 +2307,7 @@
             const data = LANG[currentLang];
             const step = stepsData[currentStep];
             const content = document.querySelector('.onboarding__content');
-            
+
             const actionsNormal = document.getElementById('onboarding-actions-normal');
             const actionsRoles = document.getElementById('onboarding-roles');
 
@@ -2330,11 +2330,11 @@
                 iconEl.textContent = step.icon;
                 titleEl.innerHTML = data[step.titleKey];
                 textEl.textContent = data[step.textKey];
-                
+
                 if (currentStep === 3) {
                     actionsNormal.style.display = 'none';
                     actionsRoles.style.display = 'flex';
-                    
+
                     document.getElementById('role-abiturient').textContent = data.onbRoleAbiturient;
                     document.getElementById('role-student').textContent = data.onbRoleStudent;
                     document.getElementById('role-teacher').textContent = data.onbRoleTeacher;
@@ -2354,16 +2354,16 @@
         // Language toggle
         langBtn.addEventListener('click', () => {
             currentLang = currentLang === 'ru' ? 'kk' : 'ru';
-            
+
             document.documentElement.lang = currentLang;
-            
+
             document.querySelectorAll('[data-i18n]').forEach((el) => {
                 const key = el.getAttribute('data-i18n');
                 if (LANG[currentLang][key]) el.innerHTML = LANG[currentLang][key];
             });
             const langLabel = document.getElementById('lang-label');
             if (langLabel) langLabel.textContent = currentLang === 'ru' ? 'ҚАЗ' : 'РУС';
-            
+
             updateUI();
         });
 
@@ -2382,15 +2382,15 @@
             btn.addEventListener('click', (e) => {
                 const role = e.target.getAttribute('data-role');
                 const data = LANG[currentLang];
-                
+
                 if (role === 'abiturient') {
                     localStorage.setItem('gtk-onboarding', 'true');
                     // Плавное закрытие и редирект на Басты бет
                     if (typeof gsap !== 'undefined') {
                         gsap.to(card, { y: 30, scale: 0.95, opacity: 0, duration: 0.4, ease: 'power2.in' });
-                        gsap.to(overlay, { 
-                            opacity: 0, 
-                            duration: 0.4, 
+                        gsap.to(overlay, {
+                            opacity: 0,
+                            duration: 0.4,
                             delay: 0.1,
                             onComplete: () => {
                                 window.location.href = 'index.html';
@@ -2404,8 +2404,8 @@
                     showToast(data.onbRoleError);
                     if (typeof gsap !== 'undefined') {
                         // Тряска (Shake)
-                        gsap.fromTo(card, 
-                            { x: -5 }, 
+                        gsap.fromTo(card,
+                            { x: -5 },
                             { x: 5, duration: 0.05, yoyo: true, repeat: 5, ease: 'linear', onComplete: () => gsap.set(card, { x: 0 }) }
                         );
                     }
@@ -2416,7 +2416,7 @@
         function showToast(msg) {
             toast.textContent = msg;
             clearTimeout(toastTimeout);
-            
+
             if (typeof gsap !== 'undefined') {
                 gsap.to(toast, { opacity: 1, y: -40, duration: 0.3, ease: 'back.out(1.5)' });
                 toastTimeout = setTimeout(() => {
@@ -2440,9 +2440,9 @@
             if (typeof gsap !== 'undefined') {
                 // Роскошное закрытие через GSAP
                 gsap.to(card, { y: 30, scale: 0.95, opacity: 0, duration: 0.4, ease: 'power2.in' });
-                gsap.to(overlay, { 
-                    opacity: 0, 
-                    duration: 0.4, 
+                gsap.to(overlay, {
+                    opacity: 0,
+                    duration: 0.4,
                     delay: 0.1,
                     onComplete: finishClose
                 });
@@ -2460,14 +2460,14 @@
         // Initialize display
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        
+
         // Стартовая GSAP-анимация (эффект отскока пружины)
         updateUI(); // сразу ставим правильный язык
-        
+
         if (typeof gsap !== 'undefined') {
             const card = document.querySelector('.onboarding-card');
-            gsap.fromTo(overlay, 
-                { opacity: 0 }, 
+            gsap.fromTo(overlay,
+                { opacity: 0 },
                 { opacity: 1, duration: 0.5, ease: 'power2.out' }
             );
             gsap.fromTo(card,
