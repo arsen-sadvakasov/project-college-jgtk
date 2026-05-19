@@ -337,6 +337,9 @@
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
+            // Stop Lenis smooth scroll if active
+            if (typeof lenis !== 'undefined') lenis.stop();
+
             // Show the specific modal
             modal.style.display = 'block';
 
@@ -361,6 +364,9 @@
             // Remove active classes (triggers opacity transition)
             modals.forEach((m) => m.classList.remove('active'));
             overlay.classList.remove('active');
+
+            // Restart Lenis smooth scroll if active
+            if (typeof lenis !== 'undefined') lenis.start();
 
             // After transition completes, hide everything
             setTimeout(() => {
