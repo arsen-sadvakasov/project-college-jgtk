@@ -243,24 +243,50 @@
                     жұмыс істей алады.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="Балаларды оқыту мен тәрбиелеудің теориялық және практикалық негіздері. Оқу әдістемелері, сабақ жоспарлау мен бағалау жүйесі.">Педагогика</span>
-                    <span class="modal__tech-tag"
-                        data-info="Бала психологиясы, жас ерекшеліктері, мінез-құлық ерекшеліктерін зерттеу. Баланың эмоционалдық және когнитивтік дамуын түсіну.">Психология</span>
-                    <span class="modal__tech-tag"
-                        data-info="Баланың жеке дамуына бағытталған халықаралық білім беру жүйесі. Балалардың өз бетінше зерттеуі мен оқуына негізделген тәсіл.">Монтессори
-                        әдісі</span>
-                    <span class="modal__tech-tag"
-                        data-info="Өнер арқылы балалардың шығармашылық қабілетін дамыту, эмоциялық сауықтыру мен көркем білім берудің тиімді құралы.">Арт-терапия</span>
-                    <span class="modal__tech-tag"
-                        data-info="Балалардың тіл дамуын қадағалау, сөйлеу кемістіктерін анықтау мен түзету. Дыбыс шығаруды дұрыстау әдістері.">Логопедия</span>
-                    <span class="modal__tech-tag"
-                        data-info="Балалардың физикалық дамуын қамтамасыз ету: жаттығулар, ойындар, қимыл белсенділігі мен денсаулық нығайту.">Дене
-                        тәрбиесі</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын пәндер:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="ped-base" data-connections="psych-pro">
+                                    <span class="skill-node__icon">📚</span>
+                                    <span class="skill-node__label" data-i18n="skill_ped_base">Основы педагогики</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="psych-pro" data-requires="ped-base" data-connections="expert-method">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_psych_pro">Детская психология</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="expert-method" data-requires="psych-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_expert_method">Монтессори & Логопедия</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-1"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -280,27 +306,50 @@
                 <p>Түлектер бухгалтер, аудитор, қаржы маманы немесе салық кеңесшісі ретінде жұмысқа орналаса алады.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="Қазақстанда ең көп қолданылатын бухгалтерлік бағдарлама. Шоттарды жүргізу, есептілік жасау мен қаржылық операцияларды автоматтандыру.">1С:
-                        Бухгалтерия</span>
-                    <span class="modal__tech-tag"
-                        data-info="Microsoft Excel бағдарламасында қаржылық кестелер құру, формулалар, диаграммалар мен деректерді талдау дағдылары.">Excel</span>
-                    <span class="modal__tech-tag"
-                        data-info="ҚР Салық кодексі, салық декларацияларын толтыру, салық есептілігін жүргізу мен мемлекеттік органдарға тапсыру ережелері.">Салық
-                        заңнамасы</span>
-                    <span class="modal__tech-tag"
-                        data-info="Халықаралық аудит стандарттары бойынша тексеру әдістемесі, ішкі бақылау жүйесін бағалау мен аудиторлық қорытынды жасау.">Аудит
-                        стандарттары</span>
-                    <span class="modal__tech-tag"
-                        data-info="Кәсіпорын қаржысын бағалау, болжамдау, табыстылық пен өтімділік көрсеткіштерін есептеу мен қаржылық есептілікті талдау.">Қаржылық
-                        талдау</span>
-                    <span class="modal__tech-tag"
-                        data-info="Кәсіпорын ресурстарын жоспарлау жүйесі — қоймалық есеп, сатып алу, өндіріс пен қаржыны біріктірілген бағдарламада басқару.">1С:
-                        ERP</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын пәндер:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="fin-base" data-connections="tax-pro">
+                                    <span class="skill-node__icon">📊</span>
+                                    <span class="skill-node__label" data-i18n="skill_fin_base">Математика и Финансы</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="tax-pro" data-requires="fin-base" data-connections="audit-expert">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_tax_pro">1С Бухгалтерия & Налоги</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="audit-expert" data-requires="tax-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_audit_expert">Аудит и Финансовый анализ</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-2"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -321,28 +370,50 @@
                     істей алады.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="Мүліктік және жеке мүліктік емес қатынастарды реттейтін нормалар. Шарттар, мұрагерлік, меншік құқығы мен міндеттемелер.">Азаматтық
-                        құқық</span>
-                    <span class="modal__tech-tag"
-                        data-info="Қылмыстық заңнама: қылмыс түрлері, жазалау шаралары, тергеу процесі мен сот ісін жүргізу негіздері.">Қылмыстық
-                        құқық</span>
-                    <span class="modal__tech-tag"
-                        data-info="ҚР Конституциясы, мемлекеттік құрылыс негіздері, азаматтардың құқықтары мен бостандықтары, билік тармақтары.">Конституциялық
-                        құқық</span>
-                    <span class="modal__tech-tag"
-                        data-info="Жұмыс берушілер мен жұмысшылардың құқықтары мен міндеттері. Еңбек шарттары, демалыс, жалақы мен еңбек дауларын шешу.">Еңбек
-                        құқығы</span>
-                    <span class="modal__tech-tag"
-                        data-info="Мемлекеттік басқару саласы, әкімшілік құқық бұзушылықтар мен олардың жауапкершілігі, лицензиялау мен рұқсат беру.">Әкімшілік
-                        құқық</span>
-                    <span class="modal__tech-tag"
-                        data-info="Заңнаманы іс жүзінде қолдану, құқықтық құжаттар мен арыздар жасау, сот тәжірибесін зерттеу дағдылары.">Құқықтық
-                        сауаттылық</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын пәндер:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="law-base" data-connections="court-pro">
+                                    <span class="skill-node__icon">⚖️</span>
+                                    <span class="skill-node__label" data-i18n="skill_law_base">Основы права</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="court-pro" data-requires="law-base" data-connections="lawyer-expert">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_court_pro">Гражданское & Уголовное право</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="lawyer-expert" data-requires="court-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_lawyer_expert">Адвокатская практика & Судебный процесс</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-3"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -363,26 +434,50 @@
                 <p>Түлектер жүйелік әкімші, желілік инженер немесе IT-маман ретінде жұмыс істей алады.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын технологиялар:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="Cisco желілік құрылғыларын конфигурациялау: маршрутизаторлар, коммутаторлар, VLAN баптау мен желілік хаттамалар (TCP/IP, DNS, DHCP).">Cisco
-                        Networking</span>
-                    <span class="modal__tech-tag"
-                        data-info="Microsoft серверлік операциялық жүйесін басқару: Active Directory, DNS, файл сервері, групповые политикалар мен пайдаланушыларды басқару.">Windows
-                        Server</span>
-                    <span class="modal__tech-tag"
-                        data-info="Ашық бастапқы кодты операциялық жүйелермен жұмыс: Ubuntu, CentOS — командалық жол, сервистерді баптау мен автоматтандыру (Bash).">Linux</span>
-                    <span class="modal__tech-tag"
-                        data-info="Ақпаратты қорғау саласы: файрволдар, VPN, шифрлау, желілік қауіптерді анықтау мен алдын алу шаралары.">Желі
-                        қауіпсіздігі</span>
-                    <span class="modal__tech-tag"
-                        data-info="Компьютерлік техниканы жинау, жөндеу мен баптау. Процессорлар, видеокарталар, оперативтік жад, жинақтау құрылғылары.">Аппараттық
-                        қамтамасыз ету</span>
-                    <span class="modal__tech-tag"
-                        data-info="VMware, Hyper-V виртуалды машиналарды құру мен басқару. Серверлерді виртуализациялау, ресурстарды оңтайландыру.">Виртуализация</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын технологиялар:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="net-base" data-connections="sys-pro">
+                                    <span class="skill-node__icon">🔌</span>
+                                    <span class="skill-node__label" data-i18n="skill_net_base">Сети & Железо</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="sys-pro" data-requires="net-base" data-connections="security-expert">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_sys_pro">Системное администрирование</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="security-expert" data-requires="sys-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_security_expert">Кибербезопасность & Cloud</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-4"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -403,32 +498,50 @@
                 <p>Оқу барысында студенттер нақты жобалар жасап, хакатондарға қатысып, кәсіби портфолио жинақтайды.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын технологиялар:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="Әмбебап бағдарламалау тілі — веб-әзірлеу (Django, Flask), деректерді талдау (Pandas, NumPy), машиналық оқыту мен автоматтандыру үшін қолданылады.">Python</span>
-                    <span class="modal__tech-tag"
-                        data-info="Веб-бағдарламалаудың негізгі тілі — интерактивті сайттар, серверлік қосымшалар (Node.js) мен мобильді приложениялар жасау үшін.">JavaScript</span>
-                    <span class="modal__tech-tag"
-                        data-info="Веб-беттердің құрылымын (HTML) мен дизайнын (CSS) жасаудың іргетасы. Flexbox, Grid, анимациялар мен адаптивті дизайн.">HTML
-                        / CSS</span>
-                    <span class="modal__tech-tag"
-                        data-info="Facebook жасаған JavaScript кітапханасы — қазіргі заманғы интерактивті веб-қосымшалар мен SPA (Single Page Application) әзірлеу үшін.">React</span>
-                    <span class="modal__tech-tag"
-                        data-info="Python-да жазылған веб-фреймворк — толыққанды веб-сайттар мен API-лар құру, деректер базасымен жұмыс, пайдаланушылар жүйесі.">Django</span>
-                    <span class="modal__tech-tag"
-                        data-info="Қуатты реляциялық деректер қоры — SQL сұраныстар, кестелер, индекстер, транзакциялар мен деректер тұтастығын қамтамасыз ету.">PostgreSQL</span>
-                    <span class="modal__tech-tag"
-                        data-info="Кодты нұсқалау жүйесі мен ынтымақтастық платформасы — кодты сақтау, командалық жұмыс, pull request, code review мен CI/CD.">Git
-                        & GitHub</span>
-                    <span class="modal__tech-tag"
-                        data-info="Ашық бастапқы кодты операциялық жүйе — серверлерді басқару, командалық жол, Bash скрипттері мен DevOps негіздері.">Linux</span>
-                    <span class="modal__tech-tag"
-                        data-info="Жүйелік бағдарламалау тілі — алгоритмдер, ООП (объектіге бағытталған бағдарламалау), жады басқару мен жоғары өнімді қосымшалар. ">C++</span>
-                    <span class="modal__tech-tag"
-                        data-info="UI/UX дизайн құралы — интерфейстерді прототиптеу, дизайн жүйелерін құру, командалық дизайн жұмысы мен интерактивті макеттер.">Figma</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын технологиялар:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="flow-base" data-connections="web-pro">
+                                    <span class="skill-node__icon">📝</span>
+                                    <span class="skill-node__label" data-i18n="skill_flow_base">Основы алгоритмизации</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="web-pro" data-requires="flow-base" data-connections="mobile-expert">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_web_pro">Веб-разработка</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="mobile-expert" data-requires="web-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_mobile_expert">Мобильные приложения & React</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-5"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -449,25 +562,50 @@
                     қызметте жұмыс істей алады.</p>
             </div>
             <div class="modal__tech">
-                <h4 class="modal__tech-title">Оқытылатын пәндер:</h4>
-                <div class="modal__tech-grid">
-                    <span class="modal__tech-tag"
-                        data-info="ҚР жол жүру ережелері, жол қозғалысын реттеу, жүргізуші мен жаяу жүргіншілердің құқықтары, жауапкершілік шаралары.">ЖҚЕ
-                        (Жол ережелері)</span>
-                    <span class="modal__tech-tag"
-                        data-info="Жол инфрақұрылымын жобалау мен сызу бағдарламасы — жолдар, қиылыстар, белгілер мен жол жабдықтарының сызбалары.">AutoCAD</span>
-                    <span class="modal__tech-tag"
-                        data-info="Көлік бағдарын анықтау мен бақылау жүйелері. Жүк тасымалы мен қоғамдық көлікті GPS арқылы қадағалау технологиялары.">GPS
-                        навигация</span>
-                    <span class="modal__tech-tag"
-                        data-info="Көлік ағындарын жоспарлау, жүк тасымалдау маршруттарын оңтайландыру, қойма мен таратуды басқару негіздері.">Логистика</span>
-                    <span class="modal__tech-tag"
-                        data-info="Жол белгілерінің халықаралық жіктелуі: ескерту, тыйым салу, нұсқау белгілері мен жол разметкасын қолдану ережелері.">Жол
-                        белгілері</span>
-                    <span class="modal__tech-tag"
-                        data-info="Көлік құралдарының қоршаған ортаға әсерін бағалау — шу, газ шығарындылары, экологиялық стандарттар мен «жасыл» көлік түрлері.">Экология</span>
+                <h4 class="modal__tech-title" data-i18n="skillsTreeTitle">Оқытылатын пәндер:</h4>
+                <div class="skills-tree-container">
+                    <svg class="skills-tree__svg"></svg>
+                    <div class="skills-tree__levels">
+                        <div class="skills-level" data-level="1">
+                            <h5 class="skills-level__title" data-i18n="level1Title">1 Курс: Основы</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node unlocked" data-skill="traffic-base" data-connections="log-pro">
+                                    <span class="skill-node__icon">🚦</span>
+                                    <span class="skill-node__label" data-i18n="skill_traffic_base">Правила движения</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="2">
+                            <h5 class="skills-level__title" data-i18n="level2Title">2-3 Курс: Специализация</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="log-pro" data-requires="traffic-base" data-connections="safety-expert">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_log_pro">Транспортная логистика</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="skills-level" data-level="3">
+                            <h5 class="skills-level__title" data-i18n="level3Title">4 Курс: Профессионал</h5>
+                            <div class="skills-level__nodes">
+                                <button class="skill-node locked" data-skill="safety-expert" data-requires="log-pro">
+                                    <span class="skill-node__icon">🔒</span>
+                                    <span class="skill-node__label" data-i18n="skill_safety_expert">Безопасность на транспорте</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal__tech-info" id="tech-info-6"></div>
+                <div class="skills-tree__info-panel">
+                    <div class="skills-tree__info-placeholder" data-i18n="skillsTreePlaceholder">Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.</div>
+                    <div class="skills-tree__info-content hidden">
+                        <h5 class="skills-tree__info-title"></h5>
+                        <p class="skills-tree__info-desc"></p>
+                        <div class="skills-tree__info-skills">
+                            <h6 data-i18n="skillsAcquiredTitle">Получаемые навыки:</h6>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

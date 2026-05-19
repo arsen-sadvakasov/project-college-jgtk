@@ -13,6 +13,8 @@
         TELEGRAM_CHAT_ID: '871666479',
     };
 
+    let currentActiveSkill = null;
+
     // ========================================
     // HERO WATERMARK — Mouse-tracking parallax
     // ========================================
@@ -342,6 +344,17 @@
             overlay.offsetHeight;
             overlay.classList.add('active');
             modal.classList.add('active');
+
+            // Draw skills tree lines if container exists
+            const container = modal.querySelector('.skills-tree-container');
+            if (container) {
+                setTimeout(() => {
+                    drawTreeLines(container);
+                }, 100);
+                setTimeout(() => {
+                    drawTreeLines(container);
+                }, 400);
+            }
         }
 
         function closeAllModals() {
@@ -386,49 +399,210 @@
             if (e.key === 'Escape') closeAllModals();
         });
 
-        // Initialize tech tag clicks
-        initTechTags();
+        // Initialize Skills Tree
+        initSkillsTree();
     }
 
     // ========================================
-    // TECH TAG INFO (Clickable tags)
+    // ACADEMIC SKILLS TREE
     // ========================================
-    function initTechTags() {
-        const allTags = document.querySelectorAll('.modal__tech-tag[data-info]');
+    function initSkillsTree() {
+        const nodes = document.querySelectorAll('.skill-node');
 
-        allTags.forEach((tag) => {
-            tag.addEventListener('click', (e) => {
+        nodes.forEach(node => {
+            node.addEventListener('click', (e) => {
                 e.stopPropagation();
 
-                const techSection = tag.closest('.modal__tech');
-                if (!techSection) return;
+                const container = node.closest('.skills-tree-container');
+                if (!container) return;
 
-                const infoPanel = techSection.querySelector('.modal__tech-info');
-                if (!infoPanel) return;
+                const skillId = node.getAttribute('data-skill');
+                const isLocked = node.classList.contains('locked');
+                const isUnlocked = node.classList.contains('unlocked');
+                const isActive = node.classList.contains('active');
 
-                const allSiblingTags = techSection.querySelectorAll('.modal__tech-tag');
-                const info = tag.getAttribute('data-info');
-                const tagName = tag.textContent.trim();
+                // If locked — shake and show error toast
+                if (isLocked) {
+                    node.classList.add('shake');
+                    setTimeout(() => node.classList.remove('shake'), 400);
 
-                // If this tag is already active — close it
-                if (tag.classList.contains('active')) {
-                    tag.classList.remove('active');
-                    infoPanel.classList.remove('active');
-                    infoPanel.innerHTML = '';
+                    // Show error toast
+                    let toast = container.querySelector('.skills-toast');
+                    if (!toast) {
+                        toast = document.createElement('div');
+                        toast.className = 'skills-toast';
+                        container.appendChild(toast);
+                    }
+
+                    const reqId = node.getAttribute('data-requires');
+                    const currentLang = document.documentElement.lang || 'ru';
+                    const reqName = LANG[currentLang][`skill_${reqId.replace(/-/g, '_')}`] || reqId;
+                    
+                    toast.textContent = (LANG[currentLang].skillsLockedWarning || 'Сначала разблокируйте: ') + reqName;
+                    toast.classList.add('show');
+
+                    // Clear previous timeout if any
+                    if (node.toastTimeout) clearTimeout(node.toastTimeout);
+                    node.toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+
                     return;
                 }
 
-                // Deactivate all sibling tags
-                allSiblingTags.forEach((t) => t.classList.remove('active'));
+                // If unlocked — set active (passed) and unlock next nodes
+                if (isUnlocked) {
+                    node.classList.remove('unlocked');
+                    node.classList.add('active');
 
-                // Activate this tag
-                tag.classList.add('active');
+                    // Play beautiful GSAP wave/pop animation
+                    if (window.gsap) {
+                        gsap.fromTo(node, 
+                            { scale: 0.95, boxShadow: '0 0 0px rgba(184, 147, 90, 0)' }, 
+                            { scale: 1.05, boxShadow: '0 0 25px rgba(184, 147, 90, 0.6)', duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' }
+                        );
+                    }
 
-                // Show info panel
-                infoPanel.innerHTML = `<strong>${tagName}</strong>${info}`;
-                infoPanel.classList.add('active');
+                    // Unlock descendants
+                    const containerNodes = container.querySelectorAll('.skill-node');
+                    containerNodes.forEach(depNode => {
+                        if (depNode.getAttribute('data-requires') === skillId) {
+                            if (depNode.classList.contains('locked')) {
+                                depNode.classList.remove('locked');
+                                depNode.classList.add('unlocked');
+
+                                // Replace icon span lock symbol with actual icon from registry
+                                const currentLang = document.documentElement.lang || 'ru';
+                                const registry = LANG[currentLang].skillsRegistry;
+                                const depSkillId = depNode.getAttribute('data-skill');
+                                const iconSpan = depNode.querySelector('.skill-node__icon');
+                                if (iconSpan && registry && registry[depSkillId]) {
+                                    iconSpan.textContent = registry[depSkillId].icon;
+                                }
+
+                                if (window.gsap) {
+                                    gsap.from(depNode, {
+                                        scale: 0.85,
+                                        duration: 0.4,
+                                        ease: 'back.out(2)'
+                                    });
+                                }
+                            }
+                        }
+                    });
+
+                    // Redraw paths
+                    drawTreeLines(container);
+                }
+
+                // Select current node and show details
+                const allContainerNodes = container.querySelectorAll('.skill-node');
+                allContainerNodes.forEach(n => n.classList.remove('selected'));
+                node.classList.add('selected');
+
+                currentActiveSkill = skillId;
+                updateSkillsInfoPanel(container, skillId);
             });
         });
+
+        // Window resize path drawing update
+        window.addEventListener('resize', () => {
+            const activeModal = document.querySelector('.modal.active');
+            if (activeModal) {
+                const container = activeModal.querySelector('.skills-tree-container');
+                if (container) drawTreeLines(container);
+            }
+        });
+    }
+
+    // Function to draw connecting lines between skill nodes
+    function drawTreeLines(container) {
+        const svg = container.querySelector('.skills-tree__svg');
+        if (!svg) return;
+
+        svg.innerHTML = '';
+
+        // If mobile — do not draw connection lines (hide lines)
+        if (window.innerWidth <= 768) return;
+
+        const containerRect = container.getBoundingClientRect();
+        const nodes = container.querySelectorAll('.skill-node');
+
+        nodes.forEach(parent => {
+            const connectionsAttr = parent.getAttribute('data-connections');
+            if (!connectionsAttr) return;
+
+            const targets = connectionsAttr.split(',');
+            targets.forEach(targetId => {
+                const child = container.querySelector(`.skill-node[data-skill="${targetId.trim()}"]`);
+                if (!child) return;
+
+                const parentRect = parent.getBoundingClientRect();
+                const childRect = child.getBoundingClientRect();
+
+                // Calculate relative coordinates inside the SVG canvas
+                const x1 = parentRect.right - containerRect.left;
+                const y1 = parentRect.top + parentRect.height / 2 - containerRect.top;
+
+                const x2 = childRect.left - containerRect.left;
+                const y2 = childRect.top + childRect.height / 2 - containerRect.top;
+
+                // Create SVG path using cubic Bezier curve
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const controlOffset = Math.abs(x2 - x1) * 0.45;
+                const d = `M ${x1} ${y1} C ${x1 + controlOffset} ${y1}, ${x2 - controlOffset} ${y2}, ${x2} ${y2}`;
+
+                path.setAttribute('d', d);
+
+                // If parent node is active, connection path is active
+                if (parent.classList.contains('active')) {
+                    path.classList.add('path-active');
+                }
+
+                svg.appendChild(path);
+            });
+        });
+    }
+
+    // Function to update the detail panel for a selected skill
+    function updateSkillsInfoPanel(container, skillId) {
+        const infoPanel = container.closest('.modal').querySelector('.skills-tree__info-panel');
+        if (!infoPanel) return;
+
+        const placeholder = infoPanel.querySelector('.skills-tree__info-placeholder');
+        const content = infoPanel.querySelector('.skills-tree__info-content');
+        if (!placeholder || !content) return;
+
+        const currentLang = document.documentElement.lang || 'ru';
+        const registry = LANG[currentLang].skillsRegistry;
+        if (!registry || !registry[skillId]) return;
+
+        const skillData = registry[skillId];
+
+        // Fill data
+        const titleEl = content.querySelector('.skills-tree__info-title');
+        const descEl = content.querySelector('.skills-tree__info-desc');
+        const listEl = content.querySelector('.skills-tree__info-skills ul');
+
+        titleEl.textContent = `${skillData.icon} ${skillData.name}`;
+        descEl.textContent = skillData.desc;
+
+        listEl.innerHTML = '';
+        skillData.skills.forEach(skill => {
+            const li = document.createElement('li');
+            li.textContent = skill;
+            listEl.appendChild(li);
+        });
+
+        // Toggle visibility
+        placeholder.classList.add('hidden');
+        content.classList.remove('hidden');
+
+        // GSAP animate content fade-in
+        if (window.gsap) {
+            gsap.fromTo(content, 
+                { opacity: 0, y: 10 },
+                { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }
+            );
+        }
     }
 
     // ========================================
@@ -775,7 +949,142 @@
             onbRoleError: '⚠️ Бөлім әлі әзірленуде',
             errorTitle: 'Кешіріңіз, бет табылмады',
             errorDesc: 'Сіз іздеген бет жойылған немесе мекен-жайы ауысқан болуы мүмкін.',
-            errorBtn: 'Басты бетке оралу'
+            errorBtn: 'Басты бетке оралу',
+            skillsTreeTitle: 'Оқу траекториясы: Дағдылар ағашы',
+            level1Title: '1 Курс: Базалық деңгей',
+            level2Title: '2-3 Курс: Мамандандыру',
+            level3Title: '4 Курс: Кәсіби деңгей',
+            skillsTreePlaceholder: 'Пәнді таңдап, оның сипаттамасын көру үшін және келесі деңгейлерді ашу үшін оның үстінен басыңыз.',
+            skillsAcquiredTitle: 'Алынатын дағдылар:',
+            skillsLockedWarning: 'Салдарлық байланыс! Алдымен бұл пәннің алдыңғы талаптарын ашыңыз: ',
+            skill_ped_base: 'Педагогика негіздері',
+            skill_psych_pro: 'Балалар психологиясы',
+            skill_expert_method: 'Монтессори & Логопедия',
+            skill_fin_base: 'Математика және қаржы',
+            skill_tax_pro: '1С Бухгалтерия & Салық',
+            skill_audit_expert: 'Аудит және қаржылық талдау',
+            skill_law_base: 'Құқық негіздері',
+            skill_court_pro: 'Азаматтық & Қылмыстық құқық',
+            skill_lawyer_expert: 'Адвокаттық тәжірибе & Сот',
+            skill_net_base: 'Желілер & Железо',
+            skill_sys_pro: 'Жүйелік әкімшілік',
+            skill_security_expert: 'Киберқауіпсіздік & Cloud',
+            skill_flow_base: 'Алгоритмдеу негіздері',
+            skill_web_pro: 'Веб-әзірлеу (Python/JS)',
+            skill_mobile_expert: 'Мобильді қосымшалар & React',
+            skill_traffic_base: 'Жол қозғалысының ережелері',
+            skill_log_pro: 'Транспорттық логистика',
+            skill_safety_expert: 'Көліктегі қауіпсіздік',
+            skillsRegistry: {
+                'ped-base': {
+                    name: 'Педагогика негіздері',
+                    icon: '📚',
+                    desc: 'Балаларды оқыту мен тәрбиелеудің теориялық және практикалық негіздері. Оқу әдістемелері, сабақ жоспарлау мен бағалау жүйесі.',
+                    skills: ['Сабақ жоспарлау негіздері', 'Тәрбие теориясы мен әдістемесі', 'Жас ерекшеліктер педагогикасы']
+                },
+                'psych-pro': {
+                    name: 'Балалар психологиясы',
+                    icon: '🧠',
+                    desc: 'Бала психологиясы, жас ерекшеліктері, мінез-құлық ерекшеліктерін зерттеу. Баланың эмоционалдық және когнитивтік дамуын түсіну.',
+                    skills: ['Бала психологиясын талдау', 'Мінез-құлық диагностикасы', 'Эмоционалды дамуды қолдау']
+                },
+                'expert-method': {
+                    name: 'Монтессори & Логопедия',
+                    icon: '🌟',
+                    desc: 'Баланың жеке дамуына бағытталған халықаралық білім беру жүйесі және сөйлеу кемістіктерін анықтау мен түзету әдістері.',
+                    skills: ['Монтессори материалдарымен жұмыс', 'Сөйлеу терапиясының негіздері', 'Дамытушы орта құру']
+                },
+                'fin-base': {
+                    name: 'Математика және қаржы',
+                    icon: '📊',
+                    desc: 'Қаржылық математика негіздері, пайыздық есептеулер, экономикалық теория және қаржы жүйесінің құрылымы.',
+                    skills: ['Қаржылық есептеулер', 'Экономикалық талдау', 'Негізгі қаржы көрсеткіштері']
+                },
+                'tax-pro': {
+                    name: '1С: Бухгалтерия & Салық',
+                    icon: '💻',
+                    desc: '1С бағдарламасында есеп жүргізу және ҚР Салық заңнамасына сәйкес салық декларацияларын толтыру, салық есептілігін жүргізу.',
+                    skills: ['1С: Бухгалтерияда жұмыс', 'Салық есептемелерін дайындау', 'Бастапқы құжаттама']
+                },
+                'audit-expert': {
+                    name: 'Аудит және қаржылық талдау',
+                    icon: '🔍',
+                    desc: 'Халықаралық аудит стандарттары бойынша тексеру әдістемесі және кәсіпорынның қаржылық жағдайын бағалау, өтімділікті талдау.',
+                    skills: ['Аудиторлық тексеру', 'Қаржылық есептілікті талдау', 'Қаржылық тәуекелдерді басқару']
+                },
+                'law-base': {
+                    name: 'Құқық негіздері',
+                    icon: '⚖️',
+                    desc: 'Мемлекет пен құқық теориясының негіздері, ҚР Конституциялық құқығы, заң жүйесінің жалпы құрылымы.',
+                    skills: ['Құқықтық нормаларды талдау', 'Конституциялық заңнама негіздері', 'Мемлекеттік органдар құрылымы']
+                },
+                'court-pro': {
+                    name: 'Азаматтық & Қылмыстық құқық',
+                    icon: '💼',
+                    desc: 'Азаматтық-құқықтық қатынастар, меншік және келісімшарт құқығы, сонымен қатар қылмыстық заңнама және жауапкершілік негіздері.',
+                    skills: ['Келісімшарттар жасасу', 'Қылмыстық-құқықтық сараптама', 'Азаматтардың мүддесін қорғау']
+                },
+                'lawyer-expert': {
+                    name: 'Адвокаттық тәжірибе & Сот',
+                    icon: '🏛️',
+                    desc: 'Сот процесіне қатысу, құқықтық құжаттар мен арыздар жасау, сотта өкілдік ету және адвокаттық этика ережелері.',
+                    skills: ['Сотта қорғау тактикасы', 'Заңгерлік құжаттарды дайындау', 'Сот процесін жүргізу']
+                },
+                'net-base': {
+                    name: 'Желілер & Железо',
+                    icon: '🔌',
+                    desc: 'Желілік технологиялар негіздері (TCP/IP), компьютерлік техниканы жинау, баптау және оның аппараттық құрылымы.',
+                    skills: ['Компьютер жинау және жөндеу', 'Желілік кабельдерді баптау', 'Желі протоколдарын түсіну']
+                },
+                'sys-pro': {
+                    name: 'Жүйелік әкімшілік',
+                    icon: '⚙️',
+                    desc: 'Windows Server және Linux операциялық жүйелерін орнату, серверлерді виртуализациялау және желілік ресурстарды басқару.',
+                    skills: ['Linux & Windows серверлерін баптау', 'Виртуализациямен жұмыс', 'Active Directory басқару']
+                },
+                'security-expert': {
+                    name: 'Киберқауіпсіздік & Cloud',
+                    icon: '🛡️',
+                    desc: 'Ақпаратты қорғау әдідері, желілік шабуылдардан қорғану, VPN және бұлттық инфрақұрылымдарды қауіпсіз басқару.',
+                    skills: ['Қауіпсіздік аудитін жүргізу', 'Бұлттық ресурстарды қорғау', 'Инженерлік қауіпсіздік желісін құру']
+                },
+                'flow-base': {
+                    name: 'Алгоритмдеу негіздері',
+                    icon: '📝',
+                    desc: 'Алгоритмдер құру, логикалық ойлау, бағдарламалаудың негізгі концепциялары және C++ тілінде алгоритмдерді іске асыру.',
+                    skills: ['Алгоритмдік логика', 'С++ негізгі синтаксисі', 'Мәселелерді декомпозициялау']
+                },
+                'web-pro': {
+                    name: 'Веб-әзірлеу (Python/JS)',
+                    icon: '🌐',
+                    desc: 'HTML/CSS арқылы адаптивті сайттар жасау, JavaScript және Python (Django/Flask) көмегімен функционалды веб-қосымшаларды әзірлеу.',
+                    skills: ['Адаптивті HTML/CSS макеті', 'Интерактивті JavaScript код', 'Python-да backend әзірлеу']
+                },
+                'mobile-expert': {
+                    name: 'Мобильді қосымшалар & React',
+                    icon: '📱',
+                    desc: 'React және мобильді технологияларды қолдана отырып, күрделі SPA қосымшаларын және Android/iOS үшін мобильді интерфейстерді жасау.',
+                    skills: ['React SPA әзірлеу', 'Мобильді интерфейстер дизайны', 'API интеграциясы және күйді басқару']
+                },
+                'traffic-base': {
+                    name: 'Жол қозғалысының ережелері',
+                    icon: '🚦',
+                    desc: 'ҚР Жол жүру ережелерін (ЖҚЕ) зерттеу, жол белгілері мен таңбаларының қолданылуы, қозғалыс қауіпсіздігі негіздері.',
+                    skills: ['ЖҚЕ заңнамасын білу', 'Қауіпті жағдайларды талдау', 'Реттеуші белгілерді қолдану']
+                },
+                'log-pro': {
+                    name: 'Транспорттық логистика',
+                    icon: '🚚',
+                    desc: 'Жүк және жолаушы тасымалын ұйымдастыру, маршруттарды оңтайландыру және қойма логистикасының заманауи әдістері.',
+                    skills: ['Маршруттарды оңтайландыру', 'Жүк тасымалдауды бақылау', 'AutoCAD-та сызбалар құру']
+                },
+                'safety-expert': {
+                    name: 'Көліктегі қауіпсіздік',
+                    icon: '🚨',
+                    desc: 'Жол-көлік оқиғаларының алдын алу, GPS навигация және қозғалысты автоматтандырылған басқару жүйелерін енгізу.',
+                    skills: ['Қауіпсіздік жүйесін аудиттеу', 'GPS навигациялық жүйелерімен жұмыс', 'Экологиялық мониторинг']
+                }
+            }
         },
         ru: {
             navLinks: ['Главная', 'Специальности', 'О колледже', 'Абитуриенту', 'Контакты'],
@@ -924,7 +1233,142 @@
             onbRoleError: '⚠️ Раздел еще в разработке',
             errorTitle: 'Извините, страница не найдена',
             errorDesc: 'Возможно, страница, которую вы ищете, была удалена или сменила адрес.',
-            errorBtn: 'Вернуться на главную'
+            errorBtn: 'Вернуться на главную',
+            skillsTreeTitle: 'Траектория обучения: Дерево навыков',
+            level1Title: '1 Курс: Базовый уровень',
+            level2Title: '2-3 Курс: Специализация',
+            level3Title: '4 Курс: Профессионал',
+            skillsTreePlaceholder: 'Нажмите на разблокированный предмет, чтобы изучить его и открыть следующие уровни.',
+            skillsAcquiredTitle: 'Получаемые навыки:',
+            skillsLockedWarning: 'Сначала разблокируйте предшествующие предметы: ',
+            skill_ped_base: 'Основы педагогики',
+            skill_psych_pro: 'Детская психология',
+            skill_expert_method: 'Монтессори & Логопедия',
+            skill_fin_base: 'Математика и Финансы',
+            skill_tax_pro: '1С Бухгалтерия & Налоги',
+            skill_audit_expert: 'Аудит и Финансовый анализ',
+            skill_law_base: 'Основы права',
+            skill_court_pro: 'Гражданское & Уголовное право',
+            skill_lawyer_expert: 'Адвокатская практика & Судебный процесс',
+            skill_net_base: 'Сети & Железо',
+            skill_sys_pro: 'Системное администрирование',
+            skill_security_expert: 'Кибербезопасность & Cloud',
+            skill_flow_base: 'Основы алгоритмизации',
+            skill_web_pro: 'Веб-разработка',
+            skill_mobile_expert: 'Мобильные приложения & React',
+            skill_traffic_base: 'Правила движения',
+            skill_log_pro: 'Транспортная логистика',
+            skill_safety_expert: 'Безопасность на транспорте',
+            skillsRegistry: {
+                'ped-base': {
+                    name: 'Основы педагогики',
+                    icon: '📚',
+                    desc: 'Теоретические и практические основы обучения и воспитания детей. Методики преподавания, планирование уроков и система оценки.',
+                    skills: ['Планирование занятий', 'Теория воспитания', 'Методические основы']
+                },
+                'psych-pro': {
+                    name: 'Детская психология',
+                    icon: '🧠',
+                    desc: 'Изучение психологии ребенка, возрастных особенностей и поведенческих паттернов. Понимание эмоционального и когнитивного развития.',
+                    skills: ['Анализ психологии ребенка', 'Поведенческая диагностика', 'Поддержка эмоционального развития']
+                },
+                'expert-method': {
+                    name: 'Монтессори & Логопедия',
+                    icon: '🌟',
+                    desc: 'Международная система образования, сфокусированная на индивидуальном развитии ребенка, и методы выявления и исправления дефектов речи.',
+                    skills: ['Работа с материалами Монтессори', 'Основы логопедической терапии', 'Создание развивающей среды']
+                },
+                'fin-base': {
+                    name: 'Математика и Финансы',
+                    icon: '📊',
+                    desc: 'Основы финансовой математики, процентные вычисления, экономическая теория и структура финансовой системы.',
+                    skills: ['Финансовые расчеты', 'Экономический анализ', 'Основные финансовые показатели']
+                },
+                'tax-pro': {
+                    name: '1С Бухгалтерия & Налоги',
+                    icon: '💻',
+                    desc: 'Ведение учета в программе 1С и налоговое законодательство РК, заполнение налоговых деклараций, ведение отчетности.',
+                    skills: ['Работа в 1С: Бухгалтерия', 'Подготовка налоговой отчетности', 'Первичный документооборот']
+                },
+                'audit-expert': {
+                    name: 'Аудит и Финансовый анализ',
+                    icon: '🔍',
+                    desc: 'Методология аудиторской проверки в соответствии с международными стандартами аудита и оценка финансового состояния предприятия.',
+                    skills: ['Аудиторская проверка', 'Анализ финансовой отчетности', 'Управление финансовыми рисками']
+                },
+                'law-base': {
+                    name: 'Основы права',
+                    icon: '⚖️',
+                    desc: 'Основы теории государства и права, Конституционное право РК, общая структура судебной и правовой системы.',
+                    skills: ['Анализ правовых норм', 'Основы конституционного права', 'Структура государственных органов']
+                },
+                'court-pro': {
+                    name: 'Гражданское & Уголовное право',
+                    icon: '💼',
+                    desc: 'Гражданско-правовые отношения, право собственности и обязательств, а также основы уголовного законодательства и ответственности.',
+                    skills: ['Составление договоров', 'Уголовно-правовая экспертиза', 'Защита интересов граждан']
+                },
+                'lawyer-expert': {
+                    name: 'Адвокатская практика & Суд',
+                    icon: '🏛️',
+                    desc: 'Участие в судебном процессе, составление исковых заявлений, представительство в суде и правила адвокатской этики.',
+                    skills: ['Тактика защиты в суде', 'Подготовка юридических документов', 'Ведение судебного процесса']
+                },
+                'net-base': {
+                    name: 'Сети & Железо',
+                    icon: '🔌',
+                    desc: 'Основы сетевых технологий (TCP/IP), сборка, настройка компьютерной техники и ее аппаратное устройство.',
+                    skills: ['Сборка и ремонт ПК', 'Обжимка и настройка сети', 'Понимание сетевых протоколов']
+                },
+                'sys-pro': {
+                    name: 'Системное администрирование',
+                    icon: '⚙️',
+                    desc: 'Установка и настройка серверных операционных систем Windows Server и Linux, виртуализация и управление сетевыми ресурсами.',
+                    skills: ['Настройка серверов Linux & Windows', 'Работа с виртуализацией', 'Управление Active Directory']
+                },
+                'security-expert': {
+                    name: 'Кибербезопасность & Cloud',
+                    icon: '🛡️',
+                    desc: 'Методы защиты информации, предотвращение сетевых угроз и атак, настройка VPN и безопасное управление облачными инфраструктурами.',
+                    skills: ['Проведение аудита безопасности', 'Защита облачных ресурсов', 'Построение безопасных сетей']
+                },
+                'flow-base': {
+                    name: 'Основы алгоритмизации',
+                    icon: '📝',
+                    desc: 'Построение алгоритмов, развитие логического мышления, основные концепции программирования и реализация алгоритмов на C++.',
+                    skills: ['Алгоритмическая логика', 'Базовый синтаксис C++', 'Декомпозиция задач']
+                },
+                'web-pro': {
+                    name: 'Веб-разработка',
+                    icon: '🌐',
+                    desc: 'Создание адаптивных веб-сайтов с использованием HTML/CSS, программирование интерактивного поведения на JS и backend на Python (Django).',
+                    skills: ['Адаптивная верстка HTML/CSS', 'Интерактивный код на JavaScript', 'Разработка backend на Django']
+                },
+                'mobile-expert': {
+                    name: 'Мобильные приложения & React',
+                    icon: '📱',
+                    desc: 'Разработка современных Single Page Applications на React, создание интерфейсов для мобильных платформ Android и iOS.',
+                    skills: ['Разработка React SPA', 'Дизайн мобильных интерфейсов', 'Интеграция API и стейт-менеджмент']
+                },
+                'traffic-base': {
+                    name: 'Правила движения',
+                    icon: '🚦',
+                    desc: 'Изучение Правил дорожного движения РК (ПДД), применение дорожных знаков и разметки, основы безопасности движения.',
+                    skills: ['Знание законодательства ПДД', 'Анализ аварийных ситуаций', 'Применение знаков регулирования']
+                },
+                'log-pro': {
+                    name: 'Транспортная логистика',
+                    icon: '🚚',
+                    desc: 'Организация грузовых и пассажирских перевозок, оптимизация маршрутов и современные методы складской логистики.',
+                    skills: ['Оптимизация маршрутов доставки', 'Контроль грузоперевозок', 'Создание чертежей в AutoCAD']
+                },
+                'safety-expert': {
+                    name: 'Безопасность на транспорте',
+                    icon: '🚨',
+                    desc: 'Предотвращение дорожно-транспортных происшествий, использование GPS навигации и автоматизированных систем управления движением.',
+                    skills: ['Аудит систем безопасности', 'Работа с навигационными системами', 'Экологический мониторинг транспорта']
+                }
+            }
         },
     };
 
@@ -1220,6 +1664,20 @@
                 Array.from(specSelect.options).forEach((opt, i) => {
                     opt.textContent = t.calcSpecOpts[i];
                 });
+            }
+        }
+
+        // Update active skills tree if open
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            const container = activeModal.querySelector('.skills-tree-container');
+            if (container) {
+                if (currentActiveSkill) {
+                    updateSkillsInfoPanel(container, currentActiveSkill);
+                }
+                setTimeout(() => {
+                    drawTreeLines(container);
+                }, 100);
             }
         }
         
